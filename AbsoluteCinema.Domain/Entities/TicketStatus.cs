@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace AbsoluteCinema.Domain.Entities
 {
-    internal class Language
+    internal class TicketStatus
     {
+        public int Id { get; set; } 
+        public string Name { get; set; }
     }
 }
