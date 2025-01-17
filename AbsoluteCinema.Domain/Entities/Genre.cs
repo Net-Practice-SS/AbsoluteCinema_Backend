@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbsoluteCinema.Domain.Entities
 {
-    internal class Genre
+    public class Genre
     {
         public int Id { get; set; }
         public string Title { get; set;}

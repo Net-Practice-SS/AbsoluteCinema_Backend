@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbsoluteCinema.Domain.Entities
 {
-    internal class Placement
+    public class Placement
     {
         public int Id { get; set; }
         public int Place { get; set; }
