@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbsoluteCinema.Domain.Entities
 {
-    internal class Ticket
+    public class Ticket
     {
         public int Id { get; set; }
         public int SessionId { get; set; }
