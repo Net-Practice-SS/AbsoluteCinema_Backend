@@ -9,7 +9,8 @@ namespace AbsoluteCinema.Infrastructure
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            //Inject DbContext
+            //Add DbContext
+            //Inject DbContext 
             
             //Inject repositories
 
