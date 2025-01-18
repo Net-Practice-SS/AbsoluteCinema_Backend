@@ -16,5 +16,7 @@ namespace AbsoluteCinema.Domain.Entities
         public string? PosterPath { get; set; }
         public MovieLanguageEnum Language { get; set; }
         public DateTime? ReleaseDate { get; set; } // New field, we have the data for it in TMDB
+
+        public ICollection<MovieGenre> MoviesGenre { get; set; }
     }
 }
