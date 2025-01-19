@@ -10,6 +10,11 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         {
             builder.HasKey(r => r.Id);
             builder.Property(r => r.Name).IsRequired().HasMaxLength(25);
+
+            // Relations with table User
+            builder.HasMany(r => r.Users)
+                .WithOne(u => u.Role)
+                .HasForeignKey(u => u.RoleId);
         }
     }
 }

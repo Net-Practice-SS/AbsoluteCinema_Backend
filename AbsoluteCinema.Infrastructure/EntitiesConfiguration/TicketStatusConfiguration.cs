@@ -9,7 +9,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<TicketStatus> builder)
         {
             builder.HasKey(ts => ts.Id);
-            builder.Property(ts => ts.Name).IsRequired().IsUnique();
+            builder.Property(ts => ts.Name).IsRequired();
         }
     }
 }

@@ -10,6 +10,12 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         {
             builder.HasKey(g => g.Id);
             builder.Property(g => g.Title).IsRequired().HasMaxLength(255);
+
+            // Relations with table MovieGenre
+            builder.HasMany(g => g.MovieGenre)
+                .WithOne(mg => mg.Genre)
+                .HasForeignKey(mg => mg.GenreId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

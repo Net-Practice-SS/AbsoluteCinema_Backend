@@ -20,6 +20,24 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
                       l => (MovieLanguageEnum)Enum.Parse(typeof(MovieLanguageEnum), l))
                   .IsRequired();
             builder.Property(m => m.ReleaseDate);
+
+            // Relations with table MovieGenre
+            builder.HasMany(m => m.MovieGenre)
+                .WithOne(mg => mg.Movie)
+                .HasForeignKey(mg => mg.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relations with table MovieActor
+            builder.HasMany(m => m.MovieActor)
+                .WithOne(ma => ma.Movie)
+                .HasForeignKey(ma => ma.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relations with table Session
+            builder.HasMany(m => m.Sessions)
+                .WithOne(s => s.Movie)
+                .HasForeignKey(s => s.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

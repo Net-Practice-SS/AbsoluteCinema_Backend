@@ -15,5 +15,7 @@ namespace AbsoluteCinema.Domain.Entities
         public string Password { get; set; }
         public int RoleId { get; set; }
         public DateTime BirthDate { get; set; }
+
+        public Role Role { get; set; }
     }
 }
