@@ -12,5 +12,7 @@ namespace AbsoluteCinema.Domain.Entities
         public int Place { get; set; }
         public int Row { get; set; }
         public double Price { get; set; }
+
+        public ICollection<Ticket> Ticket { get; set; }
     }
 }

@@ -13,5 +13,8 @@ namespace AbsoluteCinema.Domain.Entities
         public int UserId { get; set; }
         public int PlacementId { get; set; }
         public int StatusId { get; set; }
+
+        public Placement Placement { get; set; }
+        public TicketStatus Status { get; set; }
     }
 }

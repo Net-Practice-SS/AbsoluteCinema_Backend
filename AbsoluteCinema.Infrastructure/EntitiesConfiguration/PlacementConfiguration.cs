@@ -12,6 +12,8 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             builder.Property(p => p.Place).IsRequired();
             builder.Property(p => p.Row).IsRequired();
             builder.Property(p => p.Price).IsRequired();
+
+
         }
     }
 }
