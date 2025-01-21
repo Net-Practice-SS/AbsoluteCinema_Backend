@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AbsoluteCinema.Domain.Entities
+﻿namespace AbsoluteCinema.Domain.Entities
 {
     public class Session
     {
@@ -13,5 +7,6 @@ namespace AbsoluteCinema.Domain.Entities
         public DateTime Date { get; set; }
 
         public Movie Movie { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

@@ -13,7 +13,10 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             builder.Property(p => p.Row).IsRequired();
             builder.Property(p => p.Price).IsRequired();
 
-
+            // Relations with table Ticket
+            builder.HasMany(p => p.Tickets)
+                .WithOne(t => t.Placement)
+                .HasForeignKey(t => t.PlacementId);
         }
     }
 }

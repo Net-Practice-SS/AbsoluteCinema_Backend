@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AbsoluteCinema.Domain.Entities
+﻿namespace AbsoluteCinema.Domain.Entities
 {
     public class Placement
     {
@@ -13,6 +7,7 @@ namespace AbsoluteCinema.Domain.Entities
         public int Row { get; set; }
         public double Price { get; set; }
 
-        public ICollection<Ticket> Ticket { get; set; }
+        // In our ERD we have relation 1:1 between 'Placement' and 'Ticket', but 1:N is better here
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

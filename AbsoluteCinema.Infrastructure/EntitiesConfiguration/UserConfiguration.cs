@@ -9,7 +9,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(u => u.Id);
-            builder.HasKey(u => new { u.Email, u.Password });
+            //builder.HasKey(u => new { u.Email, u.Password });
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(30);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(30);
             builder.Property(u => u.Email).IsRequired().HasMaxLength(50);
@@ -19,7 +19,13 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             // Relations with table Role
             builder.HasOne(u => u.Role)
                 .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId);
+                .HasForeignKey(u => u.RoleId)
+                .IsRequired();
+
+            // Relations with table Ticket
+            builder.HasMany(u => u.Tickets)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.UserId);
         }
     }
 }

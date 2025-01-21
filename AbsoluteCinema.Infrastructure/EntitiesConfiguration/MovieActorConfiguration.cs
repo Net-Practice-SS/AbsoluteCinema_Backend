@@ -13,12 +13,14 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             // Relations with table Movie
             builder.HasOne(ma => ma.Movie)
                 .WithMany(m => m.MovieActor)
-                .HasForeignKey(ma => ma.MovieId);
+                .HasForeignKey(ma => ma.MovieId)
+                .IsRequired();
 
             // Relations with table Actor
             builder.HasOne(ma => ma.Actor)
                 .WithMany(a => a.MovieActor)
-                .HasForeignKey(ma => ma.ActorId);
+                .HasForeignKey(ma => ma.ActorId)
+                .IsRequired();
         }
     }
 }
