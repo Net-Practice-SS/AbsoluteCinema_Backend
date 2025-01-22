@@ -10,6 +10,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         {
             builder.HasKey(r => r.Id);
             builder.Property(r => r.Name).IsRequired().HasMaxLength(25);
+            builder.HasIndex(r => r.Name);
 
             // Relations with table User
             builder.HasMany(r => r.Users)

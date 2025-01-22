@@ -9,6 +9,8 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<Ticket> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.Property(t => t.Row);
+            builder.Property(t => t.Place);
 
             // Relations with table Session
             builder.HasOne(t => t.Session)
@@ -20,12 +22,6 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             builder.HasOne(t => t.User)
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UserId)
-                .IsRequired();
-
-            // Relations with table Placement
-            builder.HasOne(t => t.Placement)
-                .WithMany(p => p.Tickets)
-                .HasForeignKey(t => t.PlacementId)
                 .IsRequired();
 
             // Relations with table TicketStatus

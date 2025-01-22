@@ -19,13 +19,13 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             // Relations with table Role
             builder.HasOne(u => u.Role)
                 .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .IsRequired();
+                .HasForeignKey(u => u.RoleId);
 
             // Relations with table Ticket
             builder.HasMany(u => u.Tickets)
                 .WithOne(t => t.User)
-                .HasForeignKey(t => t.UserId);
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AbsoluteCinema.Domain.Entities
+﻿namespace AbsoluteCinema.Domain.Entities
 {
-    internal class Hall
+    public class Hall
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int RowCount { get; set; }
+        public int PlaceCount { get; set; }
+
+        public ICollection<Session> Sessions { get; set; }
     }
 }

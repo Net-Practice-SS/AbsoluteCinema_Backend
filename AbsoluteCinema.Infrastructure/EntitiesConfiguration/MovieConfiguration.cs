@@ -9,8 +9,8 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<Movie> builder)
         {
             builder.HasKey(m => m.Id);
-            builder.HasIndex(m => m.Id).IsUnique();
             builder.Property(m => m.Title).IsRequired().HasMaxLength(255);
+            builder.HasIndex(m => m.Title).IsUnique();
             builder.Property(m => m.Discription).HasMaxLength(2047);
             builder.Property(m => m.Score);
             builder.Property(m => m.Adult).IsRequired();
