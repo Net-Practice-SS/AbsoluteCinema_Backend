@@ -23,18 +23,7 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ActorConfiguration());
-            modelBuilder.ApplyConfiguration(new GenreConfiguration());
-            modelBuilder.ApplyConfiguration(new HallConfiguration());
-            modelBuilder.ApplyConfiguration(new MovieConfiguration());
-            modelBuilder.ApplyConfiguration(new MovieActorConfiguration());
-            modelBuilder.ApplyConfiguration(new MovieGenreConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new SessionConfiguration());
-            modelBuilder.ApplyConfiguration(new TicketConfiguration());
-            modelBuilder.ApplyConfiguration(new TicketStatusConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }
-
 }
