@@ -7,7 +7,6 @@
         public int UserId { get; set; }
         public int Row {  get; set; }
         public int Place {  get; set; }
-        public int PlacementId { get; set; }
         public int StatusId { get; set; }
 
         public TicketStatus Status { get; set; }
