@@ -7,6 +7,12 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext() { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=CinemaDB;Username=postgres;Password=1212");
+        }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Actor> Actors { get; set; }

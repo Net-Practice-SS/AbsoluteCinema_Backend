@@ -10,6 +10,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         {
             builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
 
+
             // Relations with table Movie
             builder.HasOne(ma => ma.Movie)
                 .WithMany(m => m.MovieActor)
