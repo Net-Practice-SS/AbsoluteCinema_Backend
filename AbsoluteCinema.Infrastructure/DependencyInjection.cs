@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AbsoluteCinema.Infrastructure.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AbsoluteCinema.Infrastructure
@@ -10,7 +12,9 @@ namespace AbsoluteCinema.Infrastructure
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             //Inject DbContext
-            
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(connectionString));
+
             //Inject repositories
 
             return services;
