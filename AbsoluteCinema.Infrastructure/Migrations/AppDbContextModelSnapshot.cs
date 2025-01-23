@@ -45,7 +45,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
                     b.HasIndex("FirstName", "LastName")
                         .IsUnique();
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.Genre", b =>
@@ -66,7 +66,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.Hall", b =>
@@ -99,7 +99,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
                     b.HasIndex("RowCount")
                         .IsUnique();
 
-                    b.ToTable("Halls");
+                    b.ToTable("Halls", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.Movie", b =>
@@ -140,7 +140,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.MovieActor", b =>
@@ -155,7 +155,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("MovieActors");
+                    b.ToTable("MovieActors", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.MovieGenre", b =>
@@ -170,7 +170,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("MovieGenre");
+                    b.ToTable("MovieGenre", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.Role", b =>
@@ -190,7 +190,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.Session", b =>
@@ -216,7 +216,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Sessions");
+                    b.ToTable("Sessions", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.Ticket", b =>
@@ -253,7 +253,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.TicketStatus", b =>
@@ -270,7 +270,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TicketStatuses");
+                    b.ToTable("TicketStatuses", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.User", b =>
@@ -311,7 +311,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("AbsoluteCinema.Domain.Entities.MovieActor", b =>
