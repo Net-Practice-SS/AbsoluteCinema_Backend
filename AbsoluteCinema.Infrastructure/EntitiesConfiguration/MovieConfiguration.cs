@@ -10,7 +10,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         {
             builder.HasKey(m => m.Id);
             builder.Property(m => m.Title).IsRequired().HasMaxLength(255);
-            builder.HasIndex(m => m.Title).IsUnique();
+            builder.HasIndex(m => m.Title);
             builder.Property(m => m.Discription).HasMaxLength(2047);
             builder.Property(m => m.Score);
             builder.Property(m => m.Adult).IsRequired();

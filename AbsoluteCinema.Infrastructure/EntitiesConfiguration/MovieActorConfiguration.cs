@@ -9,7 +9,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<MovieActor> builder)
         {
             builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
-
+            builder.Property(ma => ma.CharacterName);
 
             // Relations with table Movie
             builder.HasOne(ma => ma.Movie)
