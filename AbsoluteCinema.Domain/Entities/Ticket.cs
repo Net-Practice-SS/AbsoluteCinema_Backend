@@ -12,6 +12,6 @@
 
         public TicketStatus Status { get; set; }
         public Session Session { get; set; }
-        public User User { get; set; }
+        public Interfaces.IUser User { get; set; }
     }
 }

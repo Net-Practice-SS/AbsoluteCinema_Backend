@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AbsoluteCinema.Domain.Entities;
+using AbsoluteCinema.Domain.Enums;
 
 namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
 {

@@ -1,4 +1,6 @@
-﻿namespace AbsoluteCinema.Domain.Entities
+﻿using AbsoluteCinema.Domain.Enums;
+
+namespace AbsoluteCinema.Domain.Entities
 {
     public class Movie
     {
