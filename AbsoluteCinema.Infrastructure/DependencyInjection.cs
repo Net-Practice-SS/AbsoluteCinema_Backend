@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using AbsoluteCinema.Infrastructure.EntitiesIdentity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AbsoluteCinema.Infrastructure
