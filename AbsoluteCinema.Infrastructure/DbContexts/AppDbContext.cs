@@ -10,31 +10,6 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
 {
     public class AppDbContext : IdentityDbContext<User>
     {
-        public AppDbContext() { }
-
-        /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-         {
-             base.OnConfiguring(optionsBuilder);
-             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=CinemaDB;Username=postgres;Password=1212");
-         }*/
-
-        private readonly string _connectionString;
-
-        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration)
-            : base(options)
-        {
-            // Отримайте рядок підключення з конфігурації
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(_connectionString);
-            }
-        }
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Actor> Actors { get; set; }

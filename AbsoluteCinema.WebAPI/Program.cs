@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 //Dependency Injection
 builder.Services.AddDomainDI();
 builder.Services.AddApplicationDI();
-builder.Services.AddInfrastructureDI();
+builder.Services.AddInfrastructureDI(builder.Configuration);
 
 var app = builder.Build();
 
