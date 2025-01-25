@@ -14,11 +14,11 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(30);
             builder.Property(u => u.BirthDate).IsRequired();
 
-            // Relations with table Ticket
+            /*// Relations with table Ticket
             builder.HasMany(u => u.Tickets)
                 .WithOne()
                 .HasForeignKey(t => t.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);*/
         }
     }
 }

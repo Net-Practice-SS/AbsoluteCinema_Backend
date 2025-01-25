@@ -16,7 +16,8 @@ namespace AbsoluteCinema.Infrastructure
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(connectionString));
-            
+
+            services.AddScoped<IUser, User>();
             //Inject repositories
 
             return services;

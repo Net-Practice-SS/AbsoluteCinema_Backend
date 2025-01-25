@@ -18,11 +18,11 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
                 .HasForeignKey(t => t.SessionId)
                 .IsRequired();
 
-            // Relations with table User
+            /*// Relations with table User
             builder.HasOne(t => t.User)
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UserId)
-                .IsRequired();
+                .IsRequired();*/
 
             // Relations with table TicketStatus
             builder.HasOne(t => t.Status)

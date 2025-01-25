@@ -31,6 +31,14 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => (User)t.User) // Кастуємо IUser до User
+                .WithMany()                // Відсутність зворотного зв'язку
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }
