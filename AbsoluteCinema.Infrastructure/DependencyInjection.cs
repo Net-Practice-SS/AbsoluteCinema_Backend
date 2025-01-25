@@ -9,12 +9,9 @@ namespace AbsoluteCinema.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureDI(this IServiceCollection services)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(connectionString));
+            services.AddDbContext<AppDbContext>();
 
             services.AddScoped<IUser, User>();
             //Inject repositories
