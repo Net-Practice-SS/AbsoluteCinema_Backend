@@ -1,26 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AbsoluteCinema.Domain.Entities;
-<<<<<<< Updated upstream
-=======
 using AbsoluteCinema.Infrastructure.EntitiesConfiguration;
 using AbsoluteCinema.Infrastructure.EntitiesIdentity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
->>>>>>> Stashed changes
 
 namespace AbsoluteCinema.Infrastructure.DbContexts
 {
     public class AppDbContext : IdentityDbContext<User>
     {
-<<<<<<< Updated upstream
-
-=======
         public AppDbContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql("DefaultConnection");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=CinemaDB;Username=postgres;Password=1212");
         }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
@@ -39,6 +33,5 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
->>>>>>> Stashed changes
     }
 }

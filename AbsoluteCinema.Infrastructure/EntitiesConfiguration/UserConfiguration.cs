@@ -16,7 +16,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
 
             // Relations with table Ticket
             builder.HasMany(u => u.Tickets)
-                .WithOne(t => (User)t.User)
+                .WithOne()
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
