@@ -1,10 +1,11 @@
-﻿namespace AbsoluteCinema.Domain.Entities
-{
-    public class TicketStatus
-    {
-        public int Id { get; set; } 
-        public string Name { get; set; }
+﻿using AbsoluteCinema.Domain.Entities.Abstract;
 
-        public ICollection<Ticket> Tickets { get; set; }
+namespace AbsoluteCinema.Domain.Entities
+{
+    public class TicketStatus : BaseEntity
+    {
+        public string Name { get; set; } = null!;
+
+        public ICollection<Ticket> Tickets { get; set; } = null!;
     }
 }

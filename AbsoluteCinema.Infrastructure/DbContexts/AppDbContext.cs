@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AbsoluteCinema.Domain.Entities;
-using AbsoluteCinema.Infrastructure.EntitiesConfiguration;
-using AbsoluteCinema.Infrastructure.EntitiesIdentity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using AbsoluteCinema.Infrastructure.Identity.Data;
 
 namespace AbsoluteCinema.Infrastructure.DbContexts
 {
-    public class AppDbContext : IdentityDbContext<User>
+    public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -27,7 +24,7 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Ticket>()
-                .HasOne(t => (User)t.User) // Кастуємо IUser до User
+                .HasOne(t => (ApplicationUser)t.ApplicationUser) // Кастуємо IUser до User
                 .WithMany()                // Відсутність зворотного зв'язку
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);

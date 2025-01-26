@@ -1,11 +1,12 @@
-﻿namespace AbsoluteCinema.Domain.Entities
-{
-    public class Actor
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+﻿using AbsoluteCinema.Domain.Entities.Abstract;
 
-        public ICollection<MovieActor> MovieActor { get; set; }
+namespace AbsoluteCinema.Domain.Entities
+{
+    public class Actor : BaseEntity
+    {
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+
+        public ICollection<MovieActor> MovieActor { get; set; } = null!;
     }
 }

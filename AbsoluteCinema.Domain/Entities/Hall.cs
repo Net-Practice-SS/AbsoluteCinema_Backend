@@ -1,12 +1,13 @@
-﻿namespace AbsoluteCinema.Domain.Entities
+﻿using AbsoluteCinema.Domain.Entities.Abstract;
+
+namespace AbsoluteCinema.Domain.Entities
 {
-    public class Hall
+    public class Hall : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public int RowCount { get; set; }
         public int PlaceCount { get; set; }
 
-        public ICollection<Session> Sessions { get; set; }
+        public ICollection<Session> Sessions { get; set; } = null!;
     }
 }

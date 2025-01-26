@@ -1,11 +1,11 @@
-﻿using AbsoluteCinema.Domain.Enums;
+﻿using AbsoluteCinema.Domain.Entities.Abstract;
+using AbsoluteCinema.Domain.Enums;
 
 namespace AbsoluteCinema.Domain.Entities
 {
-    public class Movie
+    public class Movie : BaseEntity
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
         public string? Discription { get; set; }
         public double? Score { get; set; }
         public bool Adult { get; set; }
@@ -13,8 +13,8 @@ namespace AbsoluteCinema.Domain.Entities
         public MovieLanguageEnum Language { get; set; }
         public DateTime? ReleaseDate { get; set; } // New field, we have the data for it in TMDB
 
-        public ICollection<MovieGenre> MovieGenre { get; set; }
-        public ICollection<MovieActor> MovieActor { get; set; }
-        public ICollection<Session> Sessions { get; set; }  
+        public ICollection<MovieGenre> MovieGenre { get; set; } = null!;
+        public ICollection<MovieActor> MovieActor { get; set; } = null!;
+        public ICollection<Session> Sessions { get; set; } = null!;  
     }
 }

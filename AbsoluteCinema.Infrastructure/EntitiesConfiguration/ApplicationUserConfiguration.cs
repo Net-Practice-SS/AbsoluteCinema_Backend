@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using AbsoluteCinema.Domain.Entities;
-using AbsoluteCinema.Infrastructure.EntitiesIdentity;
-using AbsoluteCinema.Domain.Interfaces;
+using AbsoluteCinema.Infrastructure.Identity.Data;
 
 namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(30);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(30);

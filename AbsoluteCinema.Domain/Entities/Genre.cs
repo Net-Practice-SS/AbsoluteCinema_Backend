@@ -1,10 +1,11 @@
-﻿namespace AbsoluteCinema.Domain.Entities
-{
-    public class Genre
-    {
-        public int Id { get; set; }
-        public string Title { get; set;}
+﻿using AbsoluteCinema.Domain.Entities.Abstract;
 
-        public ICollection<MovieGenre> MovieGenre { get; set; }
+namespace AbsoluteCinema.Domain.Entities
+{
+    public class Genre : BaseEntity
+    {
+        public string Title { get; set; } = null!;
+
+        public ICollection<MovieGenre> MovieGenre { get; set; } = null!;
     }
 }
