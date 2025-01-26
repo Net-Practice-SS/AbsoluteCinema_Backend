@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AbsoluteCinema.Domain.Entities;
+using System.Reflection.Emit;
+using AbsoluteCinema.Infrastructure.Identity.Data;
+using AbsoluteCinema.Domain.Entities.Interfaces;
 
 namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
 {
@@ -17,12 +20,6 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
                 .WithMany(s => s.Tickets)
                 .HasForeignKey(t => t.SessionId)
                 .IsRequired();
-
-            /*// Relations with table User
-            builder.HasOne(t => t.User)
-                .WithMany(u => u.Tickets)
-                .HasForeignKey(t => t.UserId)
-                .IsRequired();*/
 
             // Relations with table TicketStatus
             builder.HasOne(t => t.Status)
