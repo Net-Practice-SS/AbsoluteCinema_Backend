@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbsoluteCinema.Application.Interfaces
+namespace AbsoluteCinema.Domain.Interfaces
 {
     internal class Class1
     {
