@@ -3,7 +3,7 @@ using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using AbsoluteCinema.Infrastructure.Repositories;
 
-namespace AbsoluteCinema.Infrastructure.UnitOfWork
+namespace AbsoluteCinema.Infrastructure.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork
     {
