@@ -7,6 +7,7 @@ namespace AbsoluteCinema.Infrastructure.DbContexts
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
+        public AppDbContext() { }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Actor> Actors { get; set; }
