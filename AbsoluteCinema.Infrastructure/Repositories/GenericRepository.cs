@@ -10,12 +10,6 @@ namespace AbsoluteCinema.Infrastructure.Repositories
         private readonly AppDbContext _dbContext;
         private readonly DbSet<T> _table = null!;
 
-        public GenericRepository()
-        {
-            _dbContext = new AppDbContext();
-            _table = _dbContext.Set<T>();
-        }
-
         public GenericRepository(AppDbContext dbContext)
         {
             _dbContext = dbContext;
