@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AbsoluteCinema.Application.Validators;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AbsoluteCinema.Application
 {
@@ -6,8 +8,9 @@ namespace AbsoluteCinema.Application
     {
         public static IServiceCollection AddApplicationDI(this IServiceCollection services)
         {
-            //Can be useful in the future
-
+            // Подключаем валидаторы, ищет все валидаторы там где лежит LoginDtoValidator
+            services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>(ServiceLifetime.Transient);
+           
             return services;
         }
     }
