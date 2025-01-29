@@ -1,4 +1,4 @@
-﻿namespace AbsoluteCinema.Application.DTO;
+﻿namespace AbsoluteCinema.Application.DTO.AuthDTO;
 
 public class LoginDto
 {

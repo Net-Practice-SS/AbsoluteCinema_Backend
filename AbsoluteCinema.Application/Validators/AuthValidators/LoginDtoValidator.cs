@@ -1,7 +1,7 @@
-﻿using FluentValidation;
-using AbsoluteCinema.Application.DTO;
+﻿using AbsoluteCinema.Application.DTO.AuthDTO;
+using FluentValidation;
 
-namespace AbsoluteCinema.Application.Validators;
+namespace AbsoluteCinema.Application.Validators.AuthValidators;
 public class LoginDtoValidator : AbstractValidator<LoginDto>
 {
     public LoginDtoValidator()
