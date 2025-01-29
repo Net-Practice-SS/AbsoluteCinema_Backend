@@ -10,8 +10,9 @@ namespace AbsoluteCinema.Application.Mappings;
         {
             // Маппер регистрации
             CreateMap<RegisterDto, ApplicationUser>()
-                // Username (от Identity) куда пихаем? 
-                .ForMember(dest => dest.UserName,     opt => opt.MapFrom(src => src.Email))
+                // Username берем часть от email 
+                .ForMember(dest => dest.UserName, opt => 
+                    opt.MapFrom(src => src.Email.Substring(0, src.Email.IndexOf('@'))))
                 
                 .ForMember(dest => dest.Email,        opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.FirstName,    opt => opt.MapFrom(src => src.FirstName))
@@ -24,8 +25,9 @@ namespace AbsoluteCinema.Application.Mappings;
 
             // Маппер логина
             CreateMap<LoginDto, ApplicationUser>()
-                // Username (от Identity) куда пихаем? 
-                .ForMember(dest => dest.UserName,     opt => opt.MapFrom(src => src.Email))
+                // Username берем часть от email 
+                .ForMember(dest => dest.UserName, opt => 
+                    opt.MapFrom(src => src.Email.Substring(0, src.Email.IndexOf('@'))))
                 
                 .ForMember(dest => dest.Email,        opt => opt.MapFrom(src => src.Email))
                 
