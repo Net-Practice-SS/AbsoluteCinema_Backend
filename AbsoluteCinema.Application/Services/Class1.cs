@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbsoluteCinema.Infrastructure.Repositories
+namespace AbsoluteCinema.Application.Services
 {
     internal class Class1
     {

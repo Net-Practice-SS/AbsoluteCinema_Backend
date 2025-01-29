@@ -14,6 +14,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Row);
             builder.Property(t => t.Place);
+            builder.Property(t => t.Price).IsRequired();
 
             // Relations with table Session
             builder.HasOne(t => t.Session)
