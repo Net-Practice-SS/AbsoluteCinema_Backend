@@ -1,4 +1,4 @@
-﻿using AbsoluteCinema.Application.Mappings;
+﻿using AbsoluteCinema.Application.Mappings.AuthMapping;
 using AbsoluteCinema.Application.Validators.AuthValidators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,7 @@ namespace AbsoluteCinema.Application
             services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>(ServiceLifetime.Transient);
            
             // Подключаем маппер
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(LoginMappingProfile).Assembly);
             
             return services;
         }
