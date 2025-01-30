@@ -11,7 +11,8 @@ namespace AbsoluteCinema.Domain.Strategies
         private readonly double? _score;
         private readonly bool? _adult;
         private readonly MovieLanguageEnum? _language;
-        private readonly DateTime? _releaseDate;
+        private readonly DateTime? _releaseYearFrom;
+        private readonly DateTime? _releaseYearTo;
         private readonly ICollection<Actor> _actors;
         private readonly ICollection<Genre> _genres;
 
@@ -21,7 +22,8 @@ namespace AbsoluteCinema.Domain.Strategies
             double? score = null!, 
             bool? adult = null!, 
             MovieLanguageEnum? language = null!, 
-            DateTime? releaseDate = null!,
+            DateTime? releaseYearFrom = null!,
+            DateTime? releaseYearTo = null!,
             ICollection<Actor> actors = null!,
             ICollection<Genre> genres = null!)
         {
@@ -30,7 +32,8 @@ namespace AbsoluteCinema.Domain.Strategies
             _score = score;
             _adult = adult;
             _language = language;
-            _releaseDate = releaseDate;
+            _releaseYearFrom = releaseYearFrom;
+            _releaseYearTo = releaseYearTo;
             _actors = actors;
             _genres = genres;
         }
@@ -57,9 +60,11 @@ namespace AbsoluteCinema.Domain.Strategies
             {
                 query = query.Where(m => m.Language == _language.Value);
             }
-            if (_releaseDate.HasValue)
+            if (_releaseYearFrom.HasValue && _releaseYearTo.HasValue)
             {
-                query = query.Where(m => m.ReleaseDate != null && m.ReleaseDate.Value.Date == _releaseDate.Value.Date);
+                query = query.Where(m => m.ReleaseDate.HasValue &&
+                             m.ReleaseDate.Value.Year >= _releaseYearFrom.Value.Year &&
+                             m.ReleaseDate.Value.Year <= _releaseYearTo.Value.Year);
             }
             if (_actors != null && _actors.Count > 0)
             {
