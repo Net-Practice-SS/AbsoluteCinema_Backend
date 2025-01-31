@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbsoluteCinema.Domain.Validations
+namespace AbsoluteCinema.Application.Contracts
 {
     internal class Class1
     {

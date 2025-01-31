@@ -9,8 +9,8 @@ namespace AbsoluteCinema.Domain.Entities
         public int UserId { get; set; }
         public int Row {  get; set; }
         public int Place {  get; set; }
-        public int PlacementId { get; set; }
         public int StatusId { get; set; }
+        public double Price { get; set; }
 
         public TicketStatus Status { get; set; } = null!;
         public Session Session { get; set; } = null!;
