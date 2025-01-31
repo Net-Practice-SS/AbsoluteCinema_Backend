@@ -9,7 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AbsoluteCinema.Application\AbsoluteCinema.Application.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
