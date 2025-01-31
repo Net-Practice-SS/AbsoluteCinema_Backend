@@ -1,11 +1,14 @@
 ﻿using AbsoluteCinema.Application.Mappings.AuthMapping;
 using AbsoluteCinema.Application.Mappings.EntityMapper;
 using AbsoluteCinema.Domain.Entities.Interfaces;
+using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using AbsoluteCinema.Infrastructure.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AbsoluteCinema.Infrastructure.UnitOfWorks;
+
 
 namespace AbsoluteCinema.Infrastructure
 {
@@ -17,6 +20,7 @@ namespace AbsoluteCinema.Infrastructure
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             
             services.AddScoped<IUser, ApplicationUser>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             // Подключаем мапперы
             services.AddAutoMapper(typeof(LoginMappingProfile).Assembly);
