@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AbsoluteCinema.Domain\AbsoluteCinema.Domain.csproj" />
-    <ProjectReference Include="..\AbsoluteCinema.Infrastructure\AbsoluteCinema.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

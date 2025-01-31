@@ -4,9 +4,9 @@ using AutoMapper;
 
 namespace AbsoluteCinema.Application.Mappings.EntityMapper;
 
-public class EntityMapperProfile : Profile
+public class EntityMappingProfile : Profile
 {
-    public EntityMapperProfile()
+    public EntityMappingProfile()
     {
         // Actor
         CreateMap<Actor, ActorDto>().ReverseMap();
@@ -19,12 +19,6 @@ public class EntityMapperProfile : Profile
 
         // Movie
         CreateMap<Movie, MovieDto>().ReverseMap();
-
-        // MovieActor
-        CreateMap<MovieActor, MovieActorDto>().ReverseMap();
-
-        // MovieGenre
-        CreateMap<MovieGenre, MovieGenreDto>().ReverseMap();
 
         // Session
         CreateMap<Session, SessionDto>().ReverseMap();

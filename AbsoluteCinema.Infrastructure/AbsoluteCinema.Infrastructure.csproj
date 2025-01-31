@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AbsoluteCinema.Domain\AbsoluteCinema.Domain.csproj" />
+    <ProjectReference Include="..\AbsoluteCinema.Application\AbsoluteCinema.Application.csproj" />
   </ItemGroup>
   
   <ItemGroup>
