@@ -38,19 +38,19 @@ namespace AbsoluteCinema.Infrastructure.Repositories
             _table.Remove(existing);
         }
 
-        public IEnumerable<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
+        public async Task<IEnumerable<T>> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
         {
             if (orderBy != null)
             {
-                return orderBy(_table.AsQueryable()).ToList();
+                return await orderBy(_table.AsQueryable()).ToListAsync();
             }
 
-            return _table.ToList();
+            return await _table.ToListAsync();
         }
 
-        public T? GetById(int id)
+        public async Task<T?> GetById(int id)
         {
-            return _table.Find(id);
+           return await _table.FindAsync(id);
         }
 
         public IQueryable<T> GetWithStrategy(IEntityStrategy<T> filterStrategy, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
