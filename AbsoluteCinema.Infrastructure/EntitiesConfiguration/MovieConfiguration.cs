@@ -21,7 +21,8 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
                       l => l.ToString(),
                       l => (MovieLanguageEnum)Enum.Parse(typeof(MovieLanguageEnum), l))
                   .IsRequired();
-            builder.Property(m => m.ReleaseDate);
+            builder.Property(m => m.ReleaseDate)
+                .HasColumnType("timestamp without time zone");
 
             // Relations with table MovieGenre
             builder.HasMany(m => m.MovieGenre)
