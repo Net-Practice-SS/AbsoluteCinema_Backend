@@ -1,5 +1,6 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.Entities;
+using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Domain.Entities;
 using AbsoluteCinema.Domain.Interfaces;
 using AutoMapper;
@@ -43,9 +44,18 @@ namespace AbsoluteCinema.Application.Services
             return _mapper.Map<MovieDto>(movie);
         }
 
-        public async Task UpdateMovieAsync(MovieDto movieDto)
+        public async Task UpdateMovieAsync(UpdateMovieDto updateMovieDto)
         {
-            var movie = _mapper.Map<Movie>(movieDto);
+            var currentMovieDto = await GetMovieByIdAsync(updateMovieDto.Id);
+
+            if (currentMovieDto == null)
+            {
+                throw new KeyNotFoundException("Кіно не знайдено");
+            }
+
+            _mapper.Map(updateMovieDto, currentMovieDto);
+
+            var movie = _mapper.Map<Movie>(currentMovieDto);
             _unitOfWork.Repository<Movie>().Update(movie);
             await _unitOfWork.SaveChangesAsync();
         }

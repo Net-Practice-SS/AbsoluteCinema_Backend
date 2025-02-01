@@ -48,16 +48,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateMovie([FromForm]UpdateMovieDto updateMovieDto)
         {
-            var currentMovieDto = await _movieService.GetMovieByIdAsync(updateMovieDto.Id);
-
-            if (currentMovieDto == null)
-            {
-                throw new KeyNotFoundException("Кіно не знайдено");
-            }
-
-            _mapper.Map(updateMovieDto, currentMovieDto);
-
-            await _movieService.UpdateMovieAsync(currentMovieDto);
+            await _movieService.UpdateMovieAsync(updateMovieDto);
             return Ok();
         }
     }
