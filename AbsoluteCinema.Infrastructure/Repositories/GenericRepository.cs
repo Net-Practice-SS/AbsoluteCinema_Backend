@@ -73,7 +73,22 @@ namespace AbsoluteCinema.Infrastructure.Repositories
                 return;
             }
 
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            //Шукає чи вже є локальна сутність, яку ми хочемо обновити
+            var local = _table.Local.FirstOrDefault(e => _dbContext.Entry(e).Property("Id").CurrentValue.Equals(_dbContext.Entry(entity).Property("Id").CurrentValue));
+
+            if (local != null)
+            {
+                //Оновлює дані локальної сутності
+                _dbContext.Entry(local).CurrentValues.SetValues(entity);
+            }
+            else
+            {
+                //Отримує сутність
+                _dbContext.Set<T>().Attach(entity);
+
+                //Змінює дані сутності
+                _dbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
     }
 }

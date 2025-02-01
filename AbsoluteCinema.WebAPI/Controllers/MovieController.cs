@@ -1,5 +1,7 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.Entities;
+using AbsoluteCinema.Application.DTO.MoviesDTO;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers
@@ -7,10 +9,12 @@ namespace AbsoluteCinema.WebAPI.Controllers
     public class MovieController : BaseController
     {
         private readonly IMovieService _movieService;
+        private readonly IMapper _mapper;
 
-        public MovieController(IMovieService movieService)
+        public MovieController(IMovieService movieService, IMapper mapper)
         {
             _movieService = movieService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -42,9 +46,18 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateMovie([FromForm]MovieDto movieDto)
+        public async Task<ActionResult> UpdateMovie([FromForm]UpdateMovieDto updateMovieDto)
         {
-            await _movieService.UpdateMovieAsync(movieDto);
+            var currentMovieDto = await _movieService.GetMovieByIdAsync(updateMovieDto.Id);
+
+            if (currentMovieDto == null)
+            {
+                throw new KeyNotFoundException("Кіно не знайдено");
+            }
+
+            _mapper.Map(updateMovieDto, currentMovieDto);
+
+            await _movieService.UpdateMovieAsync(currentMovieDto);
             return Ok();
         }
     }
