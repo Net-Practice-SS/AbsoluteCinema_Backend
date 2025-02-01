@@ -3,7 +3,10 @@ using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Domain.Entities;
 using AbsoluteCinema.Domain.Interfaces;
+using AbsoluteCinema.Domain.Strategies;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 
 namespace AbsoluteCinema.Application.Services
 {
@@ -20,7 +23,7 @@ namespace AbsoluteCinema.Application.Services
 
         public async Task<int> CreateMovieAsync(CreateMovieDto createMovieDto)
         {
-            var movieDto = _mapper.Map<MovieDto>(createMovieDto); 
+            var movieDto = _mapper.Map<MovieDto>(createMovieDto);
             var movie = _mapper.Map<Movie>(movieDto);
             _unitOfWork.Repository<Movie>().Add(movie);
             await _unitOfWork.SaveChangesAsync();
@@ -43,6 +46,26 @@ namespace AbsoluteCinema.Application.Services
         {
             var movie = await _unitOfWork.Repository<Movie>().GetByIdAsync(id);
             return _mapper.Map<MovieDto>(movie);
+        }
+
+        public async Task<IEnumerable<MovieDto>> GetMovieWithStrategyAsync(GetMovieWithStrategyDto getMovieWithStrategyDto)
+        {
+            var strategy = new MovieStrategy(
+                getMovieWithStrategyDto.Title,
+                getMovieWithStrategyDto.Discription,
+                getMovieWithStrategyDto.Score,
+                getMovieWithStrategyDto.Adult,
+                getMovieWithStrategyDto.Language,
+                getMovieWithStrategyDto.ReleaseDateFrom,
+                getMovieWithStrategyDto.ReleaseDateTo);
+
+            // Будуємо делегат orderBy використовуючи динамічний LINQ
+            Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy = 
+                query => query.OrderBy($"{getMovieWithStrategyDto.OrderByProperty} {getMovieWithStrategyDto.OrderDirection}");
+
+            var query = _unitOfWork.Repository<Movie>().GetWithStrategy(strategy, orderBy);
+            var movies = await query.ToListAsync();
+            return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
 
         public async Task UpdateMovieAsync(UpdateMovieDto updateMovieDto)

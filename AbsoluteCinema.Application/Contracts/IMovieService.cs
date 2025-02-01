@@ -10,5 +10,6 @@ namespace AbsoluteCinema.Application.Contracts
         Task DeleteMovieAsync(int id);
         Task UpdateMovieAsync(UpdateMovieDto updateMovieDto);
         Task<int> CreateMovieAsync(CreateMovieDto movieDto);
+        Task<IEnumerable<MovieDto>> GetMovieWithStrategyAsync(GetMovieWithStrategyDto getMovieWithStrategyDto);
     }
 }

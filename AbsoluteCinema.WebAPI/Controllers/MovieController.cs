@@ -51,5 +51,12 @@ namespace AbsoluteCinema.WebAPI.Controllers
             await _movieService.UpdateMovieAsync(updateMovieDto);
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetMovieWithStrategy([FromQuery]GetMovieWithStrategyDto getMovieWithStrategyDto)
+        {
+            var movies = await _movieService.GetMovieWithStrategyAsync(getMovieWithStrategyDto);
+            return Ok(movies);
+        }
     }
 }
