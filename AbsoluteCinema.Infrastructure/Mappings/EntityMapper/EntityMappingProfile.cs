@@ -24,7 +24,9 @@ public class EntityMappingProfile : Profile
         CreateMap<Session, SessionDto>().ReverseMap();
 
         // Ticket
-        CreateMap<Ticket, TicketDto>().ReverseMap();
+        CreateMap<Ticket, TicketDto>()
+            .ForMember(dest => dest.PlacementId, opt => opt.Ignore())
+            .ReverseMap();
 
         // TicketStatus
         CreateMap<TicketStatus, TicketStatusDto>().ReverseMap();
