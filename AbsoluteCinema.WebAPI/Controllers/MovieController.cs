@@ -32,7 +32,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateMovie([FromForm]MovieDto movieDto)
+        public async Task<ActionResult> CreateMovie([FromForm]CreateMovieDto movieDto)
         {
             var id = await _movieService.CreateMovieAsync(movieDto);
             return Ok(id);

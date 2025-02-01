@@ -10,6 +10,9 @@ namespace AbsoluteCinema.Infrastructure.Mappings.MovieMapper
         {
             CreateMap<UpdateMovieDto, MovieDto>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            CreateMap<CreateMovieDto, MovieDto>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

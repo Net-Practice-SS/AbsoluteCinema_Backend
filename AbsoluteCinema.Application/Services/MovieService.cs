@@ -18,8 +18,9 @@ namespace AbsoluteCinema.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<int> CreateMovieAsync(MovieDto movieDto)
+        public async Task<int> CreateMovieAsync(CreateMovieDto createMovieDto)
         {
+            var movieDto = _mapper.Map<MovieDto>(createMovieDto); 
             var movie = _mapper.Map<Movie>(movieDto);
             _unitOfWork.Repository<Movie>().Add(movie);
             await _unitOfWork.SaveChangesAsync();
