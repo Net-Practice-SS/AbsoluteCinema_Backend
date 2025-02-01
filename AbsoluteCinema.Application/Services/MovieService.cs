@@ -36,9 +36,13 @@ namespace AbsoluteCinema.Application.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<MovieDto>> GetAllMoviesAsync()
+        public async Task<IEnumerable<MovieDto>> GetAllMoviesAsync(GetAllMoviesDto getAllMoviesDto)
         {
-            var movies = await _unitOfWork.Repository<Movie>().GetAllAsync();
+            // Будуємо делегат orderBy використовуючи динамічний LINQ
+            Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy =
+                query => query.OrderBy($"{getAllMoviesDto.OrderByProperty} {getAllMoviesDto.OrderDirection}");
+
+            var movies = await _unitOfWork.Repository<Movie>().GetAllAsync(orderBy);
             return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
 

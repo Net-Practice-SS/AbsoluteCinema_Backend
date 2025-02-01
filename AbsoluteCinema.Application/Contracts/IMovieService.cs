@@ -5,7 +5,7 @@ namespace AbsoluteCinema.Application.Contracts
 {
     public interface IMovieService
     {
-        Task<IEnumerable<MovieDto>> GetAllMoviesAsync();
+        Task<IEnumerable<MovieDto>> GetAllMoviesAsync(GetAllMoviesDto getAllMoviesDto);
         Task<MovieDto?> GetMovieByIdAsync(int id);
         Task DeleteMovieAsync(int id);
         Task UpdateMovieAsync(UpdateMovieDto updateMovieDto);

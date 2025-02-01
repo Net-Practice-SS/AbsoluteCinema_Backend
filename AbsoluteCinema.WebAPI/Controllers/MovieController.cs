@@ -25,9 +25,9 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetMovieAll()
+        public async Task<ActionResult> GetMovieAll([FromQuery]GetAllMoviesDto getAllMoviesDto)
         {
-            var moviesDto = await _movieService.GetAllMoviesAsync();
+            var moviesDto = await _movieService.GetAllMoviesAsync(getAllMoviesDto);
             return Ok(moviesDto);
         }
 
