@@ -4,8 +4,8 @@ namespace AbsoluteCinema.Domain.Interfaces
 {
     public interface IRepository<T> where T : IEntity
     {
-        Task<IEnumerable<T>> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!);
-        Task<T?> GetById(int id);
+        Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!);
+        Task<T?> GetByIdAsync(int id);
         void Add(T entity);
         void Delete(int id);
         void Update(T entity);

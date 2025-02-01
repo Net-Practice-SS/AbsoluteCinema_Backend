@@ -4,10 +4,10 @@ namespace AbsoluteCinema.Application.Contracts
 {
     public interface IMovieService
     {
-        Task<IEnumerable<MovieDto>> GetAllMovies();
-        Task<MovieDto?> GetMovieById(int id);
-        Task DeleteMovie(int id);
-        Task UpdateMovie(MovieDto movie);
-        Task<int> CreateMovie(MovieDto movie);
+        Task<IEnumerable<MovieDto>> GetAllMoviesAsync();
+        Task<MovieDto?> GetMovieByIdAsync(int id);
+        Task DeleteMovieAsync(int id);
+        Task UpdateMovieAsync(MovieDto movieDto);
+        Task<int> CreateMovieAsync(MovieDto movieDto);
     }
 }

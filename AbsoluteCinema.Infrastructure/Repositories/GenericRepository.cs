@@ -38,7 +38,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
             _table.Remove(existing);
         }
 
-        public async Task<IEnumerable<T>> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
+        public async Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
         {
             if (orderBy != null)
             {
@@ -48,7 +48,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
             return await _table.ToListAsync();
         }
 
-        public async Task<T?> GetById(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
            return await _table.FindAsync(id);
         }
