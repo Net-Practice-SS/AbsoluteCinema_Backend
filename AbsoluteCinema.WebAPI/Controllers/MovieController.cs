@@ -1,7 +1,5 @@
 ﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers
@@ -9,12 +7,10 @@ namespace AbsoluteCinema.WebAPI.Controllers
     public class MovieController : BaseController
     {
         private readonly IMovieService _movieService;
-        private readonly IMapper _mapper;
 
-        public MovieController(IMovieService movieService, IMapper mapper)
+        public MovieController(IMovieService movieService)
         {
             _movieService = movieService;
-            _mapper = mapper;
         }
 
         [HttpGet]

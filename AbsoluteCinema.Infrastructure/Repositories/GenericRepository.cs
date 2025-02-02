@@ -2,6 +2,7 @@
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using AbsoluteCinema.Domain.Exceptions;
 
 namespace AbsoluteCinema.Infrastructure.Repositories
 {
@@ -18,11 +19,6 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
         public void Add(T entity)
         {
-            if (entity == null)
-            {
-                return;
-            }
-
             _table.Add(entity);
         }
 
@@ -32,7 +28,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
             if (existing == null)
             {
-                return;
+                throw new EntityNotFoundException(typeof(T).Name, "Id", id.ToString());
             }
 
             _table.Remove(existing);
@@ -68,13 +64,19 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
         public void Update(T entity)
         {
-            if (entity == null)
+            var entityId = _dbContext.Entry(entity).Property("Id").CurrentValue;
+
+            // Перевіряємо, чи існує сутність у базі
+            bool exists = _table.Any(e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
+
+            if (!exists)
             {
-                return;
+                throw new EntityNotFoundException(typeof(T).Name, "Id", entityId?.ToString() ?? "null");
             }
 
             //Шукає чи вже є локальна сутність, яку ми хочемо обновити
-            var local = _table.Local.FirstOrDefault(e => _dbContext.Entry(e).Property("Id").CurrentValue.Equals(_dbContext.Entry(entity).Property("Id").CurrentValue));
+            var local = _table.Local.FirstOrDefault(
+                e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
 
             if (local != null)
             {
@@ -84,7 +86,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
             else
             {
                 //Отримує сутність
-                _dbContext.Set<T>().Attach(entity);
+                _table.Attach(entity);
 
                 //Змінює дані сутності
                 _dbContext.Entry(entity).State = EntityState.Modified;

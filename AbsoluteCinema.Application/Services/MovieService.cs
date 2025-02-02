@@ -2,6 +2,7 @@
 using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Domain.Entities;
+using AbsoluteCinema.Domain.Exceptions;
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Domain.Strategies;
 using AutoMapper;
@@ -78,7 +79,7 @@ namespace AbsoluteCinema.Application.Services
 
             if (currentMovieDto == null)
             {
-                throw new KeyNotFoundException("Кіно не знайдено");
+                throw new EntityNotFoundException(nameof(Movie), "Id", updateMovieDto.Id.ToString());
             }
 
             _mapper.Map(updateMovieDto, currentMovieDto);
