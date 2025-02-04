@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
+using AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO;
 using AbsoluteCinema.Domain.Entities;
 using AutoMapper;
 
