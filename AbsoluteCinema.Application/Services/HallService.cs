@@ -49,6 +49,10 @@ namespace AbsoluteCinema.Application.Services
         public async Task<HallDto?> GetHallByIdAsync(int id)
         {
             var hall = await _unitOfWork.Repository<Hall>().GetByIdAsync(id);
+
+            if (hall == null)
+                throw new EntityNotFoundException(nameof(Hall), "Id", id.ToString());
+
             return _mapper.Map<HallDto>(hall);
         }
 

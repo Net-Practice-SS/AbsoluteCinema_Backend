@@ -65,19 +65,20 @@ namespace AbsoluteCinema.Infrastructure.Repositories
         public void Update(T entity)
         {
             var entityId = _dbContext.Entry(entity).Property("Id").CurrentValue;
+            if (entityId == null)
+            {
+                throw new EntityNotFoundException(typeof(T).Name, "Id", entityId?.ToString() ?? "null");
+            }
 
             // Перевіряємо, чи існує сутність у базі
-            bool exists = _table.Any(e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
-
+            bool exists = _table.Any(e => EF.Property<object>(e, "Id").Equals(entityId));
             if (!exists)
             {
                 throw new EntityNotFoundException(typeof(T).Name, "Id", entityId?.ToString() ?? "null");
             }
 
             //Шукає чи вже є локальна сутність, яку ми хочемо обновити
-            var local = _table.Local.FirstOrDefault(
-                e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
-
+            var local = _table.Local.FirstOrDefault(e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
             if (local != null)
             {
                 //Оновлює дані локальної сутності
