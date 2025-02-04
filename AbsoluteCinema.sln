@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbsoluteCinema.Tests", "AbsoluteCinema.Tests\AbsoluteCinema.Tests.csproj", "{6A0D69D4-94B9-4723-B6A7-36B743A1205D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{EC472F68-E592-4E0B-B401-16E353CE2121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC472F68-E592-4E0B-B401-16E353CE2121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC472F68-E592-4E0B-B401-16E353CE2121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A0D69D4-94B9-4723-B6A7-36B743A1205D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A0D69D4-94B9-4723-B6A7-36B743A1205D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A0D69D4-94B9-4723-B6A7-36B743A1205D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A0D69D4-94B9-4723-B6A7-36B743A1205D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
