@@ -6,8 +6,8 @@ namespace AbsoluteCinema.Domain.Strategies
 {
     public class MovieStrategy : IEntityStrategy<Movie>
     {
-        private readonly string _title;
-        private readonly string _discription;
+        private readonly string? _title;
+        private readonly string? _discription;
         private readonly double? _score;
         private readonly bool? _adult;
         private readonly MovieLanguageEnum? _language;
@@ -17,8 +17,8 @@ namespace AbsoluteCinema.Domain.Strategies
         private readonly ICollection<Genre> _genres;
 
         public MovieStrategy(
-            string title = null!, 
-            string description = null!, 
+            string? title = null!, 
+            string? description = null!, 
             double? score = null!, 
             bool? adult = null!, 
             MovieLanguageEnum? language = null!, 
