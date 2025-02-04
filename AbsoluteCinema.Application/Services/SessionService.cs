@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbsoluteCinema.Application.Services
 {
-    internal class Class1
+    public class SessionService
     {
     }
 }

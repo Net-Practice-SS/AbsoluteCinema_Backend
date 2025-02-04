@@ -9,8 +9,8 @@ namespace AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO
     public class UpdateSessionDto
     {
         public int Id { get; set; }
-        public int? MovieId { get; set; }
-        public DateTime? Date { get; set; }
-        public int? HallId { get; set; }
+        public int? MovieId { get; set; } = null!;
+        public DateTime? Date { get; set; } = null!;
+        public int? HallId { get; set; } = null!;
     }
 }

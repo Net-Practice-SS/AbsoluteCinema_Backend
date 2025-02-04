@@ -11,11 +11,8 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
             builder.HasKey(h => h.Id);
             builder.Property(h => h.Name).IsRequired().HasMaxLength(256);
             builder.HasIndex(h => h.Name).IsUnique();
-            builder.HasIndex(h => h.Name).IsUnique();
             builder.Property(h => h.RowCount).IsRequired();
-            builder.HasIndex(h => h.RowCount).IsUnique();
             builder.Property(h => h.PlaceCount).IsRequired();
-            builder.HasIndex(h => h.PlaceCount).IsUnique();
 
             // Relations with table Session
             builder.HasMany(h => h.Sessions)

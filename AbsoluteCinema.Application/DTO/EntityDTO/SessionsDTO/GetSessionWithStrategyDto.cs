@@ -10,9 +10,8 @@ namespace AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO
 {
     public class GetSessionWithStrategyDto : GetDto
     {
-        public int? MovieId { get; set; }
-        public DateTime? DateFrom { get; set; } = null!;
-        public DateTime? DateTo { get; set; } = null!;
-        public int? HallId { get; set; }
+        public int? MovieId { get; set; } = null!;
+        public DateTime? Date { get; set; } = null!;
+        public int? HallId { get; set; } = null!;
     }
 }
