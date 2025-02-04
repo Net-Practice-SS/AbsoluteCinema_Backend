@@ -32,29 +32,6 @@ builder.Services.AddInfrastructureDI(builder.Configuration);
 
 var app = builder.Build();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var validator = scope.ServiceProvider.GetService<IValidator<RegisterDto>>();
-//     if (validator == null)
-//     {
-//         throw new Exception("Validator could not be found.");
-//     }
-//     Console.WriteLine("Validator OK");
-// }
-//
-// using (var scope = app.Services.CreateScope())
-// {
-//     var mapper = scope.ServiceProvider.GetService<IMapper>();
-//     if (mapper == null)
-//     {
-//         throw new Exception("AutoMapper не зарегистрирован!");
-//     }
-//     Console.WriteLine("Mapping OK");
-//     
-//     var configuration = mapper.ConfigurationProvider;
-//     configuration.AssertConfigurationIsValid(); // Выбросит исключение, если есть ошибки в маппингах
-// }
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
