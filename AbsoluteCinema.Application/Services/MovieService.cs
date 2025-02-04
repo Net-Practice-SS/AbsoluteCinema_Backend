@@ -50,6 +50,10 @@ namespace AbsoluteCinema.Application.Services
         public async Task<MovieDto?> GetMovieByIdAsync(int id)
         {
             var movie = await _unitOfWork.Repository<Movie>().GetByIdAsync(id);
+
+            if (movie == null)
+                throw new EntityNotFoundException(nameof(Movie), "Id", id.ToString());
+
             return _mapper.Map<MovieDto>(movie);
         }
 
