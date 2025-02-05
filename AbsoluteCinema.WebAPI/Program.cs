@@ -9,8 +9,20 @@ using FluentValidation;
 using System.Text.Json.Serialization;
 using AbsoluteCinema.WebAPI.Filters;
 
+string reactClientCORSPolicy = "reactClientCORSPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(reactClientCORSPolicy, policy =>
+    {
+        policy.WithOrigins(builder.Configuration["ClientAddress"]) 
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); 
+    });
+});
 
 builder.Services.AddControllers(options =>
 {
@@ -20,6 +32,7 @@ builder.Services.AddControllers(options =>
     // Додаємо конвертер для серіалізації enum як рядків
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -32,6 +45,8 @@ builder.Services.AddInfrastructureDI(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseCors(reactClientCORSPolicy);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -39,7 +54,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+
 
 app.UseAuthorization();
 
