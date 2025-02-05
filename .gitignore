@@ -276,3 +276,5 @@ __pycache__/
 appsettings.json
 appsettings.development.json
 appsettings.production.json
+
+AbsoluteCinema.Infrastructure/Migrations/
