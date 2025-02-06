@@ -13,19 +13,19 @@ namespace AbsoluteCinema.Domain.Strategies
         private readonly MovieLanguageEnum? _language;
         private readonly DateTime? _releaseYearFrom;
         private readonly DateTime? _releaseYearTo;
-        private readonly ICollection<Actor> _actors;
-        private readonly ICollection<Genre> _genres;
+        private readonly ICollection<int> _actorsIds;
+        private readonly ICollection<int> _genresIds;
 
         public MovieStrategy(
-            string? title = null!, 
-            string? description = null!, 
-            double? score = null!, 
-            bool? adult = null!, 
-            MovieLanguageEnum? language = null!, 
+            string? title = null!,
+            string? description = null!,
+            double? score = null!,
+            bool? adult = null!,
+            MovieLanguageEnum? language = null!,
             DateTime? releaseYearFrom = null!,
             DateTime? releaseYearTo = null!,
-            ICollection<Actor> actors = null!,
-            ICollection<Genre> genres = null!)
+            ICollection<int> actorsIds = null!,
+            ICollection<int> genresIds = null!)
         {
             _title = title;
             _discription = description;
@@ -34,8 +34,8 @@ namespace AbsoluteCinema.Domain.Strategies
             _language = language;
             _releaseYearFrom = releaseYearFrom;
             _releaseYearTo = releaseYearTo;
-            _actors = actors;
-            _genres = genres;
+            _actorsIds = actorsIds;
+            _genresIds = genresIds;
         }
 
         public IQueryable<Movie> ApplyFilter(IQueryable<Movie> query)
@@ -66,19 +66,17 @@ namespace AbsoluteCinema.Domain.Strategies
                              m.ReleaseDate.Value.Year >= _releaseYearFrom.Value.Year &&
                              m.ReleaseDate.Value.Year <= _releaseYearTo.Value.Year);
             }
-            if (_actors != null && _actors.Count > 0)
+            if (_actorsIds != null && _actorsIds.Count > 0)
             {
                 query = query.Where(
                     m => m.MovieActor.Any(
-                        ma => _actors.Any(
-                            a => a.Id == ma.ActorId)));
+                        ma => _actorsIds.Contains(ma.ActorId)));
             }
-            if (_genres != null && _genres.Count > 0)
+            if (_genresIds != null && _genresIds.Count > 0)
             {
                 query = query.Where(
                     m => m.MovieGenre.Any(
-                        mg => _genres.Any(
-                            g => g.Id == mg.GenreId)));
+                        mg => _genresIds.Contains(mg.GenreId)));
             }
 
             return query;

@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Application.Contracts;
+using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,14 +22,14 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetMovieAll([FromQuery]GetAllMoviesDto getAllMoviesDto)
+        public async Task<ActionResult> GetMovieAll([FromQuery] GetAllMoviesDto getAllMoviesDto)
         {
             var moviesDto = await _movieService.GetAllMoviesAsync(getAllMoviesDto);
             return Ok(moviesDto);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateMovie([FromForm]CreateMovieDto movieDto)
+        public async Task<ActionResult> CreateMovie([FromForm] CreateMovieDto movieDto)
         {
             var id = await _movieService.CreateMovieAsync(movieDto);
             return Ok(id);
@@ -42,17 +43,31 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateMovie([FromForm]UpdateMovieDto updateMovieDto)
+        public async Task<ActionResult> UpdateMovie([FromForm] UpdateMovieDto updateMovieDto)
         {
             await _movieService.UpdateMovieAsync(updateMovieDto);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetMovieWithStrategy([FromQuery]GetMovieWithStrategyDto getMovieWithStrategyDto)
+        public async Task<ActionResult> GetMovieWithStrategy([FromQuery] GetMovieWithStrategyDto getMovieWithStrategyDto)
         {
             var movies = await _movieService.GetMovieWithStrategyAsync(getMovieWithStrategyDto);
             return Ok(movies);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> AddGenreToMovie([FromQuery] MovieGenreDto movieGenreDto)
+        {
+            await _movieService.AddGenreToMovieAsync(movieGenreDto);
+            return Ok($"Genre with id: {movieGenreDto.GenreId} added to movie with id: {movieGenreDto.MovieId}");
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteGenreFromMovie([FromQuery] MovieGenreDto movieGenreDto)
+        {
+            await _movieService.DeleteGenreFromMovieAsync(movieGenreDto);
+            return Ok($"Genre with id: {movieGenreDto.GenreId} deleted from movie with id {movieGenreDto.MovieId}");
         }
     }
 }

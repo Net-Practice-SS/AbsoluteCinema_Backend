@@ -74,7 +74,8 @@ namespace AbsoluteCinema.Application.Services
         public async Task<IEnumerable<GenreDto>> GetGenreWithStrategyAsync(GetGenreWithStrategyDto getGenreWithStrategyDto)
         {
             var strategy = new GenreStrategy(
-                getGenreWithStrategyDto.Title!);
+                getGenreWithStrategyDto.Title!,
+                getGenreWithStrategyDto.MoviesIds);
 
             Func<IQueryable<Genre>, IOrderedQueryable<Genre>> orderBy =
                 query => query.OrderBy($"{getGenreWithStrategyDto.OrderByProperty} {getGenreWithStrategyDto.OrderDirection}");

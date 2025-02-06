@@ -1,5 +1,6 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.Entities;
+using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Domain.Entities;
 using AbsoluteCinema.Domain.Exceptions;
@@ -22,18 +23,32 @@ namespace AbsoluteCinema.Application.Services
             _mapper = mapper;
         }
 
+        public async Task AddGenreToMovieAsync(MovieGenreDto movieGenreDto)
+        {
+            var movieGenre = _mapper.Map<MovieGenre>(movieGenreDto);
+            _unitOfWork.MovieRepository.AddGenreToMovie(movieGenre);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         public async Task<int> CreateMovieAsync(CreateMovieDto createMovieDto)
         {
             var movieDto = _mapper.Map<MovieDto>(createMovieDto);
             var movie = _mapper.Map<Movie>(movieDto);
-            _unitOfWork.Repository<Movie>().Add(movie);
+            _unitOfWork.MovieRepository.Add(movie);
             await _unitOfWork.SaveChangesAsync();
             return movie.Id;
         }
 
+        public async Task DeleteGenreFromMovieAsync(MovieGenreDto movieGenreDto)
+        {
+            var movieGenre = _mapper.Map<MovieGenre>(movieGenreDto);
+            _unitOfWork.MovieRepository.DeleteGenreFromMovie(movieGenre);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         public async Task DeleteMovieAsync(int id)
         {
-            _unitOfWork.Repository<Movie>().Delete(id);
+            _unitOfWork.MovieRepository.Delete(id);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -43,13 +58,13 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy =
                 query => query.OrderBy($"{getAllMoviesDto.OrderByProperty} {getAllMoviesDto.OrderDirection}");
 
-            var movies = await _unitOfWork.Repository<Movie>().GetAllAsync(orderBy);
+            var movies = await _unitOfWork.MovieRepository.GetAllAsync(orderBy);
             return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
 
         public async Task<MovieDto?> GetMovieByIdAsync(int id)
         {
-            var movie = await _unitOfWork.Repository<Movie>().GetByIdAsync(id);
+            var movie = await _unitOfWork.MovieRepository.GetByIdAsync(id);
 
             if (movie == null)
                 throw new EntityNotFoundException(nameof(Movie), "Id", id.ToString());
@@ -66,13 +81,14 @@ namespace AbsoluteCinema.Application.Services
                 getMovieWithStrategyDto.Adult,
                 getMovieWithStrategyDto.Language,
                 getMovieWithStrategyDto.ReleaseDateFrom,
-                getMovieWithStrategyDto.ReleaseDateTo);
+                getMovieWithStrategyDto.ReleaseDateTo,
+                genresIds: getMovieWithStrategyDto.GenresIds);
 
             // Будуємо делегат orderBy використовуючи динамічний LINQ
             Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy = 
                 query => query.OrderBy($"{getMovieWithStrategyDto.OrderByProperty} {getMovieWithStrategyDto.OrderDirection}");
 
-            var query = _unitOfWork.Repository<Movie>().GetWithStrategy(strategy, orderBy);
+            var query = _unitOfWork.MovieRepository.GetWithStrategy(strategy, orderBy);
             var movies = await query.ToListAsync();
             return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
@@ -89,7 +105,7 @@ namespace AbsoluteCinema.Application.Services
             _mapper.Map(updateMovieDto, currentMovieDto);
 
             var movie = _mapper.Map<Movie>(currentMovieDto);
-            _unitOfWork.Repository<Movie>().Update(movie);
+            _unitOfWork.MovieRepository.Update(movie);
             await _unitOfWork.SaveChangesAsync();
         }
     }
