@@ -14,6 +14,7 @@ namespace AbsoluteCinema.Application
             services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>(ServiceLifetime.Transient);
 
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IHallService, HallService>();
 
             return services;
         }
