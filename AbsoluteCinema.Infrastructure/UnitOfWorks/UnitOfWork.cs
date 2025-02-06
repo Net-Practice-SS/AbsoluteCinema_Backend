@@ -1,4 +1,5 @@
-﻿using AbsoluteCinema.Domain.Entities.Interfaces;
+﻿using AbsoluteCinema.Domain.Entities;
+using AbsoluteCinema.Domain.Entities.Interfaces;
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using AbsoluteCinema.Infrastructure.Repositories;
@@ -9,6 +10,7 @@ namespace AbsoluteCinema.Infrastructure.UnitOfWorks
     {
         private readonly AppDbContext _dbContext;
         private readonly Dictionary<Type, object> _repositories = new();
+        private IGenreRepository? _genreRepository;
 
         public UnitOfWork(AppDbContext dbContext)
         {
@@ -23,6 +25,18 @@ namespace AbsoluteCinema.Infrastructure.UnitOfWorks
             }
 
             return (IRepository<T>)_repositories[typeof(T)];
+        }
+
+        public IGenreRepository GenreRepository
+        {
+            get
+            {
+                if (_genreRepository == null)
+                {
+                    _genreRepository = new GenreRepository(_dbContext);
+                }
+                return _genreRepository;
+            }
         }
 
         public async Task SaveChangesAsync()
