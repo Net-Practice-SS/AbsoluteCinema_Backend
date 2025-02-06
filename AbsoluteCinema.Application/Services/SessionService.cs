@@ -3,8 +3,10 @@ using AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO;
 using AbsoluteCinema.Domain.Entities;
 using AbsoluteCinema.Domain.Interfaces;
 using AutoMapper;
-using AbsoluteCinema.Application.DTO.EntityDTO.Abstract;
 using System.Linq.Dynamic.Core;
+using AbsoluteCinema.Domain.Exceptions;
+using AbsoluteCinema.Domain.Strategies;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace AbsoluteCinema.Application.Services
@@ -34,7 +36,7 @@ namespace AbsoluteCinema.Application.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SessionDto>> GetAllSessionsAsync(GetDto getDto)
+        public async Task<IEnumerable<SessionDto>> GetAllSessionsAsync(GetAllSessionDto getDto)
         {
             Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
                 query => query.OrderBy($"{getDto.OrderByProperty} {getDto.OrderDirection}");
@@ -65,5 +67,18 @@ namespace AbsoluteCinema.Application.Services
             _unitOfWork.Repository<Session>().Update(session);
             await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<SessionDto>> GetSessionWithStrategyAsync(GetSessionWithStrategyDto getSessionWithStrategyDto)
+        {
+            var strategy = new SessionStrategy(getSessionWithStrategyDto.MovieId, getSessionWithStrategyDto.Date, getSessionWithStrategyDto.HallId);
+            Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
+                query => query.OrderBy($"{getSessionWithStrategyDto.OrderByProperty} {getSessionWithStrategyDto.OrderDirection}");
+
+            var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy);
+
+            var sessions = await query.ToListAsync();
+            return _mapper.Map<IEnumerable<SessionDto>>(sessions);
+        }
+
     }
 }

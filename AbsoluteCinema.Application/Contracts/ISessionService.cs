@@ -1,5 +1,4 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
-using AbsoluteCinema.Application.DTO.EntityDTO.Abstract;
 using AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO;
 
 namespace AbsoluteCinema.Application.Contracts

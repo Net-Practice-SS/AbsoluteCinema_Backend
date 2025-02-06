@@ -2,6 +2,7 @@
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using AbsoluteCinema.Domain.Exceptions;
 
 namespace AbsoluteCinema.Infrastructure.Repositories
 {
@@ -18,11 +19,6 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
         public void Add(T entity)
         {
-            if (entity == null)
-            {
-                return;
-            }
-
             _table.Add(entity);
         }
 
@@ -32,25 +28,25 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
             if (existing == null)
             {
-                return;
+                throw new EntityNotFoundException(typeof(T).Name, "Id", id.ToString());
             }
 
             _table.Remove(existing);
         }
 
-        public IEnumerable<T> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
+        public async Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
         {
             if (orderBy != null)
             {
-                return orderBy(_table.AsQueryable()).ToList();
+                return await orderBy(_table.AsQueryable()).ToListAsync();
             }
 
-            return _table.ToList();
+            return await _table.ToListAsync();
         }
 
-        public T? GetById(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return _table.Find(id);
+            return await _table.FindAsync(id);
         }
 
         public IQueryable<T> GetWithStrategy(IEntityStrategy<T> filterStrategy, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
@@ -68,12 +64,33 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
         public void Update(T entity)
         {
-            if (entity == null)
+            var entityId = _dbContext.Entry(entity).Property("Id").CurrentValue;
+
+            // Перевіряємо, чи існує сутність у базі
+            bool exists = _table.Any(e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
+
+            if (!exists)
             {
-                return;
+                throw new EntityNotFoundException(typeof(T).Name, "Id", entityId?.ToString() ?? "null");
             }
 
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            //Шукає чи вже є локальна сутність, яку ми хочемо обновити
+            var local = _table.Local.FirstOrDefault(
+                e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
+
+            if (local != null)
+            {
+                //Оновлює дані локальної сутності
+                _dbContext.Entry(local).CurrentValues.SetValues(entity);
+            }
+            else
+            {
+                //Отримує сутність
+                _table.Attach(entity);
+
+                //Змінює дані сутності
+                _dbContext.Entry(entity).State = EntityState.Modified;
+            }
         }
     }
 }
