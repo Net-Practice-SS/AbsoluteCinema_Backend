@@ -6,6 +6,6 @@ namespace AbsoluteCinema.Domain.Entities
     {
         public string Title { get; set; } = null!;
 
-        public ICollection<MovieGenre> MovieGenre { get; set; } = null!;
+        public ICollection<MovieGenre> MovieGenre { get; set; } = new List<MovieGenre>();
     }
 }
