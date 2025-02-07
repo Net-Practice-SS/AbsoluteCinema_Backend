@@ -10,6 +10,6 @@ namespace AbsoluteCinema.Domain.Entities
 
         public Movie Movie { get; set; } = null!;
         public Hall Hall { get; set; } = null!;
-        public ICollection<Ticket> Tickets { get; set; } = null!;
+        public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
     }
 }

@@ -8,7 +8,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 {
     public class GenericRepository<T> : IRepository<T> where T : class, IEntity
     {
-        private readonly AppDbContext _dbContext;
+        protected readonly AppDbContext _dbContext;
         private readonly DbSet<T> _table = null!;
 
         public GenericRepository(AppDbContext dbContext)

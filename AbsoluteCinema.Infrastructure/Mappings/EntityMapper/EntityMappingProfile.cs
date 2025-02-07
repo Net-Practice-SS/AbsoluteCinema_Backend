@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
+using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Domain.Entities;
 using AutoMapper;
 
@@ -30,5 +31,8 @@ public class EntityMappingProfile : Profile
 
         // TicketStatus
         CreateMap<TicketStatus, TicketStatusDto>().ReverseMap();
+
+        // MovieGenre
+        CreateMap<MovieGenre, MovieGenreDto>().ReverseMap();
     }
 }
