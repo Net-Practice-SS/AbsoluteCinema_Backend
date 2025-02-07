@@ -119,7 +119,7 @@ namespace AbsoluteCinema.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("ReleaseDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<double?>("Score")
                         .HasColumnType("double precision");

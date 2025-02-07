@@ -13,8 +13,8 @@ namespace AbsoluteCinema.Domain.Entities
         public MovieLanguageEnum Language { get; set; }
         public DateTime? ReleaseDate { get; set; } // New field, we have the data for it in TMDB
 
-        public ICollection<MovieGenre> MovieGenre { get; set; } = null!;
-        public ICollection<MovieActor> MovieActor { get; set; } = null!;
-        public ICollection<Session> Sessions { get; set; } = null!;  
+        public ICollection<MovieGenre> MovieGenre { get; set; } = new List<MovieGenre>();
+        public ICollection<MovieActor> MovieActor { get; set; } = new List<MovieActor>();
+        public ICollection<Session> Sessions { get; set; } = new List<Session>();
     }
 }

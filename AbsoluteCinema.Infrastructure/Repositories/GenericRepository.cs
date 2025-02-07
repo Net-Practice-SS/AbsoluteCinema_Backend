@@ -8,7 +8,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 {
     public class GenericRepository<T> : IRepository<T> where T : class, IEntity
     {
-        private readonly AppDbContext _dbContext;
+        protected readonly AppDbContext _dbContext;
         private readonly DbSet<T> _table = null!;
 
         public GenericRepository(AppDbContext dbContext)
@@ -46,7 +46,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
         public async Task<T?> GetByIdAsync(int id)
         {
-            return await _table.FindAsync(id);
+           return await _table.FindAsync(id);
         }
 
         public IQueryable<T> GetWithStrategy(IEntityStrategy<T> filterStrategy, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
@@ -65,19 +65,20 @@ namespace AbsoluteCinema.Infrastructure.Repositories
         public void Update(T entity)
         {
             var entityId = _dbContext.Entry(entity).Property("Id").CurrentValue;
+            if (entityId == null)
+            {
+                throw new EntityNotFoundException(typeof(T).Name, "Id", entityId?.ToString() ?? "null");
+            }
 
             // Перевіряємо, чи існує сутність у базі
-            bool exists = _table.Any(e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
-
+            bool exists = _table.Any(e => EF.Property<object>(e, "Id").Equals(entityId));
             if (!exists)
             {
                 throw new EntityNotFoundException(typeof(T).Name, "Id", entityId?.ToString() ?? "null");
             }
 
             //Шукає чи вже є локальна сутність, яку ми хочемо обновити
-            var local = _table.Local.FirstOrDefault(
-                e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
-
+            var local = _table.Local.FirstOrDefault(e => _dbContext.Entry(e).Property("Id").CurrentValue!.Equals(entityId));
             if (local != null)
             {
                 //Оновлює дані локальної сутності

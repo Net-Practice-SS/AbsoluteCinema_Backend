@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\AbsoluteCinema.Application\AbsoluteCinema.Application.csproj" />
+        <ProjectReference Include="..\AbsoluteCinema.Infrastructure\AbsoluteCinema.Infrastructure.csproj" />
+        <ProjectReference Include="..\AbsoluteCinema.WebAPI\AbsoluteCinema.WebAPI.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+      <PackageReference Include="xunit" Version="2.9.3" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="DomainTests\" />
+      <Folder Include="WebAPITests\" />
+    </ItemGroup>
+
+</Project>

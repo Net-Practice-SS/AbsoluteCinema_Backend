@@ -6,11 +6,33 @@ using AbsoluteCinema.Application.Validators.AuthValidators;
 using AbsoluteCinema.Domain;
 using AutoMapper;
 using FluentValidation;
+using System.Text.Json.Serialization;
+using AbsoluteCinema.WebAPI.Filters;
 
+string reactClientCORSPolicy = "reactClientCORSPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(reactClientCORSPolicy, policy =>
+    {
+        policy.WithOrigins(builder.Configuration["ClientAddress"]) 
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); 
+    });
+});
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ApiExceptionFilterAttribute>();
+}).AddJsonOptions(options =>
+{
+    // Додаємо конвертер для серіалізації enum як рядків
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -23,28 +45,7 @@ builder.Services.AddInfrastructureDI(builder.Configuration);
 
 var app = builder.Build();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var validator = scope.ServiceProvider.GetService<IValidator<RegisterDto>>();
-//     if (validator == null)
-//     {
-//         throw new Exception("Validator could not be found.");
-//     }
-//     Console.WriteLine("Validator OK");
-// }
-//
-// using (var scope = app.Services.CreateScope())
-// {
-//     var mapper = scope.ServiceProvider.GetService<IMapper>();
-//     if (mapper == null)
-//     {
-//         throw new Exception("AutoMapper не зарегистрирован!");
-//     }
-//     Console.WriteLine("Mapping OK");
-//     
-//     var configuration = mapper.ConfigurationProvider;
-//     configuration.AssertConfigurationIsValid(); // Выбросит исключение, если есть ошибки в маппингах
-// }
+app.UseCors(reactClientCORSPolicy);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -53,7 +54,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+
 
 app.UseAuthorization();
 

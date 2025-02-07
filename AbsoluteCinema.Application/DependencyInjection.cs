@@ -1,4 +1,6 @@
-﻿using AbsoluteCinema.Application.Validators.AuthValidators;
+﻿using AbsoluteCinema.Application.Contracts;
+using AbsoluteCinema.Application.Services;
+using AbsoluteCinema.Application.Validators.AuthValidators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +12,11 @@ namespace AbsoluteCinema.Application
         {
             // Подключаем флюент-валидаторы, ищет все валидаторы там где лежит LoginDtoValidator
             services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>(ServiceLifetime.Transient);
-            
+
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IHallService, HallService>();
+            services.AddScoped<IGenreService, GenreService>();
+
             return services;
         }
     }
