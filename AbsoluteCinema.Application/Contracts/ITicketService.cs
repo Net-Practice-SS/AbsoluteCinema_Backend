@@ -5,9 +5,10 @@ namespace AbsoluteCinema.Application.Contracts;
 
 public interface ITicketService
 {
-    Task<IEnumerable<TicketDto>> GetAllTicketsAsync();
-    Task<TicketDto?> GetTicketByIdAsync(int id);
-    Task<int> CreateTicketAsync(CreateTicketDto createTicketDto);
+    Task<IEnumerable<TicketDto>> GetAllTicketsAsync(GetAllTicketsDto getAllTicketsDto);
+    Task<TicketDto?> GetTicketByIdAsync(int ticketId);
+    Task DeleteTicketAsync(int ticketId);
     Task UpdateTicketAsync(UpdateTicketDto updateTicketDto);
-    Task DeleteTicketAsync(int id);
+    Task<int> CreateTicketAsync(CreateTicketDto createTicketDto);
+    Task<IEnumerable<TicketDto>> GetTicketWithStrategyAsync(GetTicketWithStrategyDto getTicketWithStrategyDto);
 }

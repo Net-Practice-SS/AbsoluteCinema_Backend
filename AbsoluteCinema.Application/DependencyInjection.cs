@@ -16,6 +16,7 @@ namespace AbsoluteCinema.Application
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IHallService, HallService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<ITicketService, TicketService>();
 
             return services;
         }
