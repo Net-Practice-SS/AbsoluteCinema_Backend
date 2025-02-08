@@ -1,8 +1,8 @@
-﻿using AbsoluteCinema.Application.Mappings.AuthMapping;
-using AbsoluteCinema.Domain.Entities.Interfaces;
+﻿using AbsoluteCinema.Domain.Entities.Interfaces;
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using AbsoluteCinema.Infrastructure.Identity.Data;
+using AbsoluteCinema.Infrastructure.Mappings.AuthMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
