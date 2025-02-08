@@ -1,4 +1,4 @@
-﻿namespace AbsoluteCinema.Application.DTO.Entities;
+﻿namespace AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
 
 public class SessionDto
 {
