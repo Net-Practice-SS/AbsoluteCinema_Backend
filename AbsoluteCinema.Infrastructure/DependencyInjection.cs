@@ -1,5 +1,4 @@
 ﻿using AbsoluteCinema.Application.Mappings.AuthMapping;
-using AbsoluteCinema.Application.Mappings.EntityMapper;
 using AbsoluteCinema.Domain.Entities.Interfaces;
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
