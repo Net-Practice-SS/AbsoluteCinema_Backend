@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AbsoluteCinema.Infrastructure.UnitOfWorks;
+using AbsoluteCinema.Application.Contracts;
+using AbsoluteCinema.Infrastructure.Services;
 
 
 namespace AbsoluteCinema.Infrastructure
@@ -18,9 +20,15 @@ namespace AbsoluteCinema.Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-            
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+               .AddRoles<ApplicationRole>()
+               .AddEntityFrameworkStores<AppDbContext>();
+
             services.AddScoped<IUser, ApplicationUser>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IJwtService, JWTService>();
             
             // Подключаем мапперы
             services.AddAutoMapper(typeof(LoginMappingProfile).Assembly);

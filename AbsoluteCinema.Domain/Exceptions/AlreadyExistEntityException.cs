@@ -2,7 +2,7 @@
 {
     public class AlreadyExistEntityException : Exception
     {
-        public AlreadyExistEntityException(string entity, string id) : base($"${entity} with id: {id} already exist")
+        public AlreadyExistEntityException(string entity, string property, string id) : base($"{entity} with {property}: {id} already exists...")
         {
         }
     }

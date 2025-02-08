@@ -1,5 +1,7 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers
@@ -14,6 +16,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetMovieById(int id)
         {
             var movieDto = await _movieService.GetMovieByIdAsync(id);
@@ -28,6 +31,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Policy = "Admin")]
         public async Task<ActionResult> CreateMovie([FromForm]CreateMovieDto movieDto)
         {
             var id = await _movieService.CreateMovieAsync(movieDto);
@@ -35,6 +39,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Policy = "Admin")]
         public async Task<ActionResult> DeleteMovie(int id)
         {
             await _movieService.DeleteMovieAsync(id);
@@ -42,6 +47,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Policy = "Admin")]
         public async Task<ActionResult> UpdateMovie([FromForm]UpdateMovieDto updateMovieDto)
         {
             await _movieService.UpdateMovieAsync(updateMovieDto);

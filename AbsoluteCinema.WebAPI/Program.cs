@@ -8,6 +8,10 @@ using AutoMapper;
 using FluentValidation;
 using System.Text.Json.Serialization;
 using AbsoluteCinema.WebAPI.Filters;
+using AbsoluteCinema.Infrastructure.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using AbsoluteCinema.Infrastructure.DbContexts;
 
 string reactClientCORSPolicy = "reactClientCORSPolicy";
 
@@ -40,8 +44,9 @@ builder.Services.AddSwaggerGen();
 
 //Dependency Injection
 builder.Services.AddDomainDI();
-builder.Services.AddApplicationDI();
+builder.Services.AddApplicationDI(builder.Configuration);
 builder.Services.AddInfrastructureDI(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -57,8 +62,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
