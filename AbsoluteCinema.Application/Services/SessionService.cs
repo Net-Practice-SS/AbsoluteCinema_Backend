@@ -1,5 +1,4 @@
 ﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO;
 using AbsoluteCinema.Domain.Entities;
 using AbsoluteCinema.Domain.Interfaces;
 using AutoMapper;
@@ -7,6 +6,7 @@ using System.Linq.Dynamic.Core;
 using AbsoluteCinema.Domain.Exceptions;
 using AbsoluteCinema.Domain.Strategies;
 using Microsoft.EntityFrameworkCore;
+using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
 
 
 namespace AbsoluteCinema.Application.Services

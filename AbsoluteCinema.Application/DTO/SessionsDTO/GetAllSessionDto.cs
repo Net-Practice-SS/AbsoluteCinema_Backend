@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbsoluteCinema.Application.DTO.EntityDTO.SessionsDTO
+namespace AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO
 {
     public class GetAllSessionDto
     {
