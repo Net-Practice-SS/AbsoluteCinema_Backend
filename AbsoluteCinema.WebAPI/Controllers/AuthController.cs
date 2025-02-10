@@ -40,18 +40,5 @@ namespace AbsoluteCinema.WebAPI.Controllers {
             //Invalidate token
             return Ok("User successfuly loged in");
         }
-
-        [HttpPost]
-        public async Task<ActionResult> CreateRole(string roleName) {
-            var result = await _authService.CreateRole(roleName);
-            if (result.Succeeded) {
-                return Ok(result);
-            }
-            return BadRequest();
-        }
-
-
-
-
     }
 }
