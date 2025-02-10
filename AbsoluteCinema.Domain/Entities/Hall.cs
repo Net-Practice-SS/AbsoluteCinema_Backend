@@ -8,6 +8,6 @@ namespace AbsoluteCinema.Domain.Entities
         public int RowCount { get; set; }
         public int PlaceCount { get; set; }
 
-        public ICollection<Session> Sessions { get; set; } = null!;
+        public ICollection<Session> Sessions { get; set; } = new List<Session>();
     }
 }

@@ -7,6 +7,6 @@ namespace AbsoluteCinema.Domain.Entities
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
 
-        public ICollection<MovieActor> MovieActor { get; set; } = null!;
+        public ICollection<MovieActor> MovieActor { get; set; } = new List<MovieActor>();
     }
 }

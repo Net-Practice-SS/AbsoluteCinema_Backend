@@ -4,7 +4,6 @@ using AbsoluteCinema.Application.Services;
 using AbsoluteCinema.Application.Validators.AuthValidators;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +19,9 @@ namespace AbsoluteCinema.Application
 
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IHallService, HallService>();
+            services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<ITicketService, TicketService>();
             //services.AddScoped<IAuthService, AuthService>();
 
 

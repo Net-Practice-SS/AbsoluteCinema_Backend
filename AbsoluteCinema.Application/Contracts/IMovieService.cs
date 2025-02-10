@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
+using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 
 namespace AbsoluteCinema.Application.Contracts
@@ -11,5 +12,7 @@ namespace AbsoluteCinema.Application.Contracts
         Task UpdateMovieAsync(UpdateMovieDto updateMovieDto);
         Task<int> CreateMovieAsync(CreateMovieDto movieDto);
         Task<IEnumerable<MovieDto>> GetMovieWithStrategyAsync(GetMovieWithStrategyDto getMovieWithStrategyDto);
+        Task AddGenreToMovieAsync(MovieGenreDto movieGenreDto);
+        Task DeleteGenreFromMovieAsync(MovieGenreDto movieGenreDto);
     }
 }
