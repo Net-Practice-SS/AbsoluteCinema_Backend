@@ -19,7 +19,7 @@ namespace AbsoluteCinema.Tests
             
             // Подключаем зависимости 
             services.AddDomainDI();
-            services.AddApplicationDI();
+            services.AddApplicationDI(configuration);
             services.AddInfrastructureDI(configuration);
 
             ServiceProvider = services.BuildServiceProvider();
