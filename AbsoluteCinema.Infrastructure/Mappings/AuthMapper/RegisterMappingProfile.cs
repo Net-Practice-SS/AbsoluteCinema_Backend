@@ -2,20 +2,23 @@
 using AbsoluteCinema.Infrastructure.Identity.Data;
 using AutoMapper;
 
-namespace AbsoluteCinema.Application.Mappings.AuthMapping;
+namespace AbsoluteCinema.Infrastructure.Mappings.AuthMapper;
 
-public class LoginMappingProfile : Profile
+public class RegisterMappingProfile : Profile
 {
-    public LoginMappingProfile()
+    public RegisterMappingProfile()
     {
-        CreateMap<LoginDto, ApplicationUser>()
+        CreateMap<RegisterDto, ApplicationUser>()
             // Username берем часть от email 
-            .ForMember(dest => dest.UserName, opt =>
+            .ForMember(dest => dest.UserName, opt => 
                 opt.MapFrom(src => src.Email.Substring(0, src.Email.IndexOf('@'))))
-
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-
-            // Игнорируем ВСЕ свойства Identity, которые не используются в DTO
+                
+            .ForMember(dest => dest.Email,        opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.FirstName,    opt => opt.MapFrom(src => src.FirstName))
+            .ForMember(dest => dest.LastName,     opt => opt.MapFrom(src => src.LastName))
+            .ForMember(dest => dest.BirthDate,    opt => opt.MapFrom(src => src.BirthDate))
+                
+            // Игнорируем ВСЕ свойства Identity
             .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.Tickets, opt => opt.Ignore())
@@ -29,10 +32,6 @@ public class LoginMappingProfile : Profile
             .ForMember(dest => dest.TwoFactorEnabled, opt => opt.Ignore())
             .ForMember(dest => dest.LockoutEnd, opt => opt.Ignore())
             .ForMember(dest => dest.LockoutEnabled, opt => opt.Ignore())
-            .ForMember(dest => dest.FirstName, opt => opt.Ignore())
-            .ForMember(dest => dest.LastName, opt => opt.Ignore())
-            .ForMember(dest => dest.BirthDate, opt => opt.Ignore())
             .ForMember(dest => dest.AccessFailedCount, opt => opt.Ignore());
     }
-    
 }
