@@ -6,14 +6,14 @@ namespace AbsoluteCinema.Domain.Strategies
     public class GenreStrategy : IEntityStrategy<Genre>
     {
         private readonly string _title;
-        private readonly ICollection<Movie> _movies;
+        private readonly ICollection<int> _moviesIds;
 
         public GenreStrategy(
             string title = null!,
-            ICollection<Movie> movies = null!)
+            ICollection<int> moviesIds = null!)
         {
             _title = title;
-            _movies = movies;
+            _moviesIds = moviesIds;
         }
 
         public IQueryable<Genre> ApplyFilter(IQueryable<Genre> query)
@@ -22,12 +22,11 @@ namespace AbsoluteCinema.Domain.Strategies
             {
                 query = query.Where(g => g.Title.Contains(_title));
             }
-            if (_movies != null && _movies.Count > 0)
+            if (_moviesIds != null && _moviesIds.Count > 0)
             {
                 query = query.Where(
                     g => g.MovieGenre.Any(
-                        mg => _movies.Any(
-                            m => m.Id == mg.MovieId)));
+                        mg => _moviesIds.Contains(mg.MovieId)));
             }
 
             return query;

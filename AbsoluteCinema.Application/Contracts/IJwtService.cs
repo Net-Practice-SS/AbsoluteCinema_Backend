@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using AbsoluteCinema.Application.DTO.AuthDTO;
-using AbsoluteCinema.Domain.Entities.Interfaces;
+﻿using System.Security.Claims;
 
 namespace AbsoluteCinema.Application.Contracts {
     public interface IJwtService {
