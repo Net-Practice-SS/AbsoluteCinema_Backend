@@ -58,6 +58,7 @@ namespace AbsoluteCinema.Infrastructure.Services {
 
         public async Task<IdentityResult> SignUpAsync(RegisterDto userRegisterDto) {
             var user = await _userManager.FindByEmailAsync(userRegisterDto.Email);
+            string userRole = "User";
 
             if (user != null) {
                 var DublicateEmailError = new IdentityError {
@@ -68,13 +69,21 @@ namespace AbsoluteCinema.Infrastructure.Services {
             }
 
             var newUser = _mapper.Map<ApplicationUser>(userRegisterDto);
-            var result = await _userManager.CreateAsync(newUser, userRegisterDto.Password);
-            if( result.Succeeded ) {
-                var addRoleResult = await _userManager.AddToRoleAsync(newUser, "User");
-                return addRoleResult;
+            if (await _roleManager.RoleExistsAsync(userRole)) {
+                var result = await _userManager.CreateAsync(newUser, userRegisterDto.Password);
+                if( result.Succeeded ) {
+                        var addRoleResult = await _userManager.AddToRoleAsync(newUser, userRole);
+                        return addRoleResult;
+                    }
+                return result;
             }
+            var RoleDoesNotExistError= new IdentityError {
+                Code = "RoleDoesNotExist",
+                Description = $"Role {userRole} does not exist."
+            };
+            return IdentityResult.Failed(RoleDoesNotExistError);
 
-            return result;
+
         }
     }
 }
