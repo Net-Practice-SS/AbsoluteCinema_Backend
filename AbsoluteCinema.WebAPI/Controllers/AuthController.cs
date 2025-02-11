@@ -36,7 +36,7 @@ namespace AbsoluteCinema.WebAPI.Controllers {
         }
         
         [HttpPost]
-        //[Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult> AssignRoleById([FromBody] AssignRoleByIdDto assignRoleDto)
         {
             var result = await _authService.AssignRoleToUserByIdAsync(assignRoleDto.UserId, assignRoleDto.RoleName);

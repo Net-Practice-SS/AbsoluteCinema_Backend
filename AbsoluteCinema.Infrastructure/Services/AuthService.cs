@@ -117,6 +117,8 @@ namespace AbsoluteCinema.Infrastructure.Services {
                     Description = $"User with ID '{userId}' already has the role '{roleName}'."
                 });
             }
+            var currentRole = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRoleAsync(user, currentRole.First());
             
             var result = await _userManager.AddToRoleAsync(user, roleName);
             return result;
