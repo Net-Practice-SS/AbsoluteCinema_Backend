@@ -33,12 +33,5 @@ namespace AbsoluteCinema.WebAPI.Controllers {
             }
             return BadRequest(result);
         }
-
-        [HttpPost]
-        public async Task<ActionResult> LogOut() {
-            //Check if user exists
-            //Invalidate token
-            return Ok("User successfuly loged in");
-        }
     }
 }

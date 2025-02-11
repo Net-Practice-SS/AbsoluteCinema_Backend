@@ -23,6 +23,7 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
                   .IsRequired();
             builder.Property(m => m.ReleaseDate)
                 .HasColumnType("timestamp without time zone");
+            builder.Property(m => m.TrailerPath);
 
             // Relations with table MovieGenre
             builder.HasMany(m => m.MovieGenre)

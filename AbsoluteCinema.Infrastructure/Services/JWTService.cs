@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.AuthDTO;
-using AbsoluteCinema.Domain.Entities.Interfaces;
 using AbsoluteCinema.Infrastructure.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using AbsoluteCinema.Domain.Exceptions;
 
 namespace AbsoluteCinema.Infrastructure.Services {
     public class JWTService : IJwtService {
@@ -40,6 +35,11 @@ namespace AbsoluteCinema.Infrastructure.Services {
 
         public IEnumerable<Claim> GetClaims(string email) {
             var user = _userManager.FindByEmailAsync(email).Result;
+
+            if (user == null)
+            {
+                throw new EntityNotFoundException(nameof(ApplicationUser), "email", email);
+            }
 
             var claims = new List<Claim> {
                 new Claim(ClaimTypes.Name, user.UserName!),

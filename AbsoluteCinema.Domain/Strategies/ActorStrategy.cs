@@ -7,16 +7,16 @@ namespace AbsoluteCinema.Domain.Strategies
     {
         private readonly string _firstName;
         private readonly string _lastName;
-        private readonly ICollection<Movie> _movies;
+        private readonly ICollection<int> _moviesIds;
 
         public ActorStrategy(
             string firstName = null!,
             string lastName = null!,
-            ICollection<Movie> movies = null!)
+            ICollection<int> moviesIds = null!)
         {
             _firstName = firstName;
             _lastName = lastName;
-            _movies = movies;
+            _moviesIds = moviesIds;
         }
 
         public IQueryable<Actor> ApplyFilter(IQueryable<Actor> query)
@@ -29,12 +29,11 @@ namespace AbsoluteCinema.Domain.Strategies
             {
                 query = query.Where(a => a.LastName.Contains(_lastName));
             }
-            if (_movies != null && _movies.Count > 0)
+            if (_moviesIds != null && _moviesIds.Count > 0)
             {
                 query = query.Where(
-                    a => a.MovieActor != null && a.MovieActor.Any(
-                        ma => _movies.Any(
-                            m => m.Id == ma.MovieId)));
+                    a => a.MovieActor.Any(
+                        ma => _moviesIds.Contains(ma.MovieId)));
             }
 
             return query;

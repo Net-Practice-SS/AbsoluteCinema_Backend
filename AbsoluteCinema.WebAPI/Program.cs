@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(reactClientCORSPolicy, policy =>
     {
-        policy.WithOrigins(builder.Configuration["ClientAddress"]) 
+        policy.WithOrigins(builder.Configuration["ClientAddress"]!) 
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials(); 

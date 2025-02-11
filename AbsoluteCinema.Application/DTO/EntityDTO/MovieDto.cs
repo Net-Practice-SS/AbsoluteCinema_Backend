@@ -12,4 +12,5 @@ public class MovieDto
     public string? PosterPath { get; set; }
     public MovieLanguageEnum Language { get; set; }
     public DateTime? ReleaseDate { get; set; }
+    public string? TrailerPath { get; set; }
 }
