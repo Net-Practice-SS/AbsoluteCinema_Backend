@@ -12,6 +12,7 @@ namespace AbsoluteCinema.Application.DTO.MoviesDTO
         public MovieLanguageEnum? Language { get; set; } = null!;
         public DateTime? ReleaseDateFrom { get; set; } = null!;
         public DateTime? ReleaseDateTo { get; set; } = null!;
+        public List<int> ActorsIds { get; set; } = new();
         public List<int> GenresIds { get; set; } = new();
 
         public string OrderByProperty { get; set; } = "Id"; 

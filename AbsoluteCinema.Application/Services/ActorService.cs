@@ -76,7 +76,8 @@ namespace AbsoluteCinema.Application.Services
         {
             var strategy = new ActorStrategy(
                 getActorWithStrategyDto.FirstName!,
-                getActorWithStrategyDto.LastName!);
+                getActorWithStrategyDto.LastName!,
+                getActorWithStrategyDto.MoviesIds);
 
             Func<IQueryable<Actor>, IOrderedQueryable<Actor>> orderBy =
                 query => query.OrderBy(

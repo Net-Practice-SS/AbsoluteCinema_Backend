@@ -95,7 +95,8 @@ namespace AbsoluteCinema.Application.Services
                 getMovieWithStrategyDto.Language,
                 getMovieWithStrategyDto.ReleaseDateFrom,
                 getMovieWithStrategyDto.ReleaseDateTo,
-                genresIds: getMovieWithStrategyDto.GenresIds);
+                getMovieWithStrategyDto.ActorsIds,
+                getMovieWithStrategyDto.GenresIds);
 
             // Будуємо делегат orderBy використовуючи динамічний LINQ
             Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy = 
