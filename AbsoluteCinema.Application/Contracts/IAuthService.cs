@@ -7,5 +7,6 @@ namespace AbsoluteCinema.Application.Contracts
     {
         Task<IdentityResult> SignInAsync(LoginDto user);
         Task<IdentityResult> SignUpAsync(RegisterDto user);
+        Task<IdentityResult> AssignRoleToUserByIdAsync(string userId, string role);
     }
 }

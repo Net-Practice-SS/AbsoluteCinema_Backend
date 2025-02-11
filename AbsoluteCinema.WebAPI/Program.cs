@@ -41,7 +41,6 @@ builder.Services.AddDomainDI();
 builder.Services.AddApplicationDI(builder.Configuration);
 builder.Services.AddInfrastructureDI(builder.Configuration);
 
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -51,7 +50,8 @@ using (var scope = app.Services.CreateScope())
     
     // Запускаем сидер для статусов тикетов
     await TicketStatusSeeder.SeedTicketStatusesAsync(context);
-
+    
+    // Запускаем сидер для ролей
     await RoleSeeder.SeedRolesAsync(roleManager);
 }
 
