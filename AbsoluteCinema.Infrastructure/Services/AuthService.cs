@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using AbsoluteCinema.Application.Contracts;
+﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.AuthDTO;
-using AbsoluteCinema.Domain.Entities.Interfaces;
-using AbsoluteCinema.Domain.Exceptions;
 using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.Identity.Data;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AbsoluteCinema.Infrastructure.Services {
     public class AuthService : IAuthService {
@@ -29,9 +19,6 @@ namespace AbsoluteCinema.Infrastructure.Services {
             _roleManager = roleManager;
         }
 
-        public void LogOut() {
-            throw new NotImplementedException();
-        }
         public async Task<IdentityResult> SignInAsync(LoginDto userLoginDto) {
             var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
 
@@ -54,7 +41,6 @@ namespace AbsoluteCinema.Infrastructure.Services {
                 return IdentityResult.Failed(passwordError);
             }
         }
-
 
         public async Task<IdentityResult> SignUpAsync(RegisterDto userRegisterDto) {
             var user = await _userManager.FindByEmailAsync(userRegisterDto.Email);
