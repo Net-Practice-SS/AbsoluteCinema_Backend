@@ -23,10 +23,6 @@ namespace AbsoluteCinema.Infrastructure.Services {
             _userManager = userManager;
             _roleManager = roleManager;
         }
-
-        public void LogOut() {
-            throw new NotImplementedException();
-        }
         
         public async Task<IdentityResult> SignInAsync(LoginDto userLoginDto) {
             var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
