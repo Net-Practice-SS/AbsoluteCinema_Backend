@@ -12,6 +12,7 @@ namespace AbsoluteCinema.Infrastructure.UnitOfWorks
         private readonly Dictionary<Type, object> _repositories = new();
         private IGenreRepository? _genreRepository;
         private IMovieRepository? _movieRepository;
+        private IActorRepository? _actorRepository;
 
         public UnitOfWork(AppDbContext dbContext)
         {
@@ -37,6 +38,18 @@ namespace AbsoluteCinema.Infrastructure.UnitOfWorks
                     _genreRepository = new GenreRepository(_dbContext);
                 }
                 return _genreRepository;
+            }
+        }
+        
+        public IActorRepository ActorRepository
+        {
+            get
+            {
+                if (_actorRepository == null)
+                {
+                    _actorRepository = new ActorRepository(_dbContext);
+                }
+                return _actorRepository;
             }
         }
 

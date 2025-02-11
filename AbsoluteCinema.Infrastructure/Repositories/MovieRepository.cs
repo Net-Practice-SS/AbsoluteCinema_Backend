@@ -49,5 +49,43 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
             _dbContext.MovieGenre.Remove(movieGenre);
         }
+        
+        public void AddActorToMovie(MovieActor movieActor)
+        {
+            var movie = _dbContext.Movies.Find(movieActor.MovieId);
+            if (movie == null)
+                throw new EntityNotFoundException(nameof(Movie), "Id", movieActor.MovieId.ToString());
+
+            var actor = _dbContext.Actors.Find(movieActor.ActorId);
+            if (actor == null)
+                throw new EntityNotFoundException(nameof(Actor), "Id", movieActor.ActorId.ToString());
+
+            if (_dbContext.MovieActors.Any(mg => mg.MovieId == movieActor.MovieId && mg.ActorId == movieActor.ActorId))
+                throw new AlreadyExistEntityException(nameof(MovieActor), "(MovieId, ActorId)", $"{movieActor.MovieId}, {movieActor.ActorId}");
+
+            movieActor.Movie = movie;
+            movieActor.Actor = actor;
+
+            actor.MovieActor.Add(movieActor);
+        }
+        
+        public void DeleteActorFromMovie(MovieActor movieActor)
+        {
+            var movie = _dbContext.Movies.Find(movieActor.MovieId);
+            if (movie == null)
+                throw new EntityNotFoundException(nameof(Movie), "Id", movieActor.MovieId.ToString());
+
+            var actor = _dbContext.Actors.Find(movieActor.ActorId);
+            if (actor == null)
+                throw new EntityNotFoundException(nameof(Actor), "Id", movieActor.ActorId.ToString());
+
+            if (!_dbContext.MovieActors.Any(mg => mg.MovieId == movieActor.MovieId && mg.ActorId == movieActor.ActorId))
+                throw new EntityNotFoundException(nameof(MovieActor), "(MovieId, ActorId)", $"{movieActor.MovieId}, {movieActor.ActorId}");
+
+            movieActor.Movie = movie;
+            movieActor.Actor = actor;
+
+            _dbContext.MovieActors.Remove(movieActor);
+        }
     }
 }
