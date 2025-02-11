@@ -3,8 +3,10 @@ using AbsoluteCinema.Application;
 using AbsoluteCinema.Domain;
 using System.Text.Json.Serialization;
 using AbsoluteCinema.Infrastructure.DbContexts;
+using AbsoluteCinema.Infrastructure.Identity.Data;
 using AbsoluteCinema.Infrastructure.Seeders;
 using AbsoluteCinema.WebAPI.Filters;
+using Microsoft.AspNetCore.Identity;
 
 string reactClientCORSPolicy = "reactClientCORSPolicy";
 
@@ -45,9 +47,12 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
     
     // Запускаем сидер для статусов тикетов
     await TicketStatusSeeder.SeedTicketStatusesAsync(context);
+
+    await RoleSeeder.SeedRolesAsync(roleManager);
 }
 
 app.UseCors(reactClientCORSPolicy);
