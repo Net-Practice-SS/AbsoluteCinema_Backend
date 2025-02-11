@@ -22,6 +22,7 @@ namespace AbsoluteCinema.Application
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IActorService, ActorService>();
             //services.AddScoped<IAuthService, AuthService>();
 
 
