@@ -7,6 +7,7 @@ namespace AbsoluteCinema.Domain.Interfaces
         IRepository<T> Repository<T>() where T : class, IEntity;
         IGenreRepository GenreRepository {  get; }
         IMovieRepository MovieRepository { get; }
+        IActorRepository ActorRepository {  get; }
         Task SaveChangesAsync();
     }
 }

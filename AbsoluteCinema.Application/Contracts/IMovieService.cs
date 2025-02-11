@@ -14,5 +14,8 @@ namespace AbsoluteCinema.Application.Contracts
         Task<IEnumerable<MovieDto>> GetMovieWithStrategyAsync(GetMovieWithStrategyDto getMovieWithStrategyDto);
         Task AddGenreToMovieAsync(MovieGenreDto movieGenreDto);
         Task DeleteGenreFromMovieAsync(MovieGenreDto movieGenreDto);
+        
+        Task AddActorToMovieAsync(MovieActorDto movieActorDto);
+        Task DeleteActorFromMovieAsync(MovieActorDto movieActorDto);
     }
 }

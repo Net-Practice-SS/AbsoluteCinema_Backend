@@ -29,6 +29,12 @@ namespace AbsoluteCinema.Application.Services
             _unitOfWork.MovieRepository.AddGenreToMovie(movieGenre);
             await _unitOfWork.SaveChangesAsync();
         }
+        public async Task AddActorToMovieAsync(MovieActorDto movieActorDto)
+        {
+            var movieActor = _mapper.Map<MovieActor>(movieActorDto);
+            _unitOfWork.MovieRepository.AddActorToMovie(movieActor);
+            await _unitOfWork.SaveChangesAsync();
+        }
 
         public async Task<int> CreateMovieAsync(CreateMovieDto createMovieDto)
         {
@@ -43,6 +49,13 @@ namespace AbsoluteCinema.Application.Services
         {
             var movieGenre = _mapper.Map<MovieGenre>(movieGenreDto);
             _unitOfWork.MovieRepository.DeleteGenreFromMovie(movieGenre);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        
+        public async Task DeleteActorFromMovieAsync(MovieActorDto movieActorDto)
+        {
+            var movieActor = _mapper.Map<MovieActor>(movieActorDto);
+            _unitOfWork.MovieRepository.DeleteActorFromMovie(movieActor);
             await _unitOfWork.SaveChangesAsync();
         }
 

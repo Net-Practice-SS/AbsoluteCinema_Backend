@@ -12,7 +12,7 @@ namespace AbsoluteCinema.Application.Contracts
         Task UpdateActorAsync(UpdateActorDto updateActorDto);
         Task<int> CreateActorAsync(CreateActorDto createActorDto);
         Task<IEnumerable<ActorDto>> GetActorWithStrategyAsync(GetActorWithStrategyDto getActorWithStrategyDto);
-        //Task AddMovieToActorAsync(MovieActorDto movieActorDto);
-        //Task DeleteMovieFromActorAsync(MovieActorDto movieActorDto);
+        Task AddMovieToActorAsync(MovieActorDto movieActorDto);
+        Task DeleteMovieFromActorAsync(MovieActorDto movieActorDto);
     }
 }
