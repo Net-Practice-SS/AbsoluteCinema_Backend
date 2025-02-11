@@ -6,5 +6,8 @@ namespace AbsoluteCinema.Domain.Interfaces
     {
         void AddGenreToMovie(MovieGenre movieGenre);
         void DeleteGenreFromMovie(MovieGenre movieGenre);
+
+        void AddActorToMovie(MovieActor movieActor);
+        void DeleteActorFromMovie(MovieActor movieActor);
     }
 }
