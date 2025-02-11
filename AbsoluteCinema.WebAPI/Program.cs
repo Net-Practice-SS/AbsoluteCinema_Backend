@@ -1,12 +1,9 @@
-using System.Diagnostics;
 using AbsoluteCinema.Infrastructure;
 using AbsoluteCinema.Application;
-using AbsoluteCinema.Application.DTO.AuthDTO;
-using AbsoluteCinema.Application.Validators.AuthValidators;
 using AbsoluteCinema.Domain;
-using AutoMapper;
-using FluentValidation;
 using System.Text.Json.Serialization;
+using AbsoluteCinema.Infrastructure.DbContexts;
+using AbsoluteCinema.Infrastructure.Seeders;
 using AbsoluteCinema.WebAPI.Filters;
 
 string reactClientCORSPolicy = "reactClientCORSPolicy";
@@ -33,17 +30,25 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Dependency Injection
 builder.Services.AddDomainDI();
-builder.Services.AddApplicationDI();
+builder.Services.AddApplicationDI(builder.Configuration);
 builder.Services.AddInfrastructureDI(builder.Configuration);
 
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    
+    // Запускаем сидер для статусов тикетов
+    await TicketStatusSeeder.SeedTicketStatusesAsync(context);
+}
 
 app.UseCors(reactClientCORSPolicy);
 
@@ -54,11 +59,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseHttpsRedirection();
 
-
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

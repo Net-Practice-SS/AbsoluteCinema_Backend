@@ -20,7 +20,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
                 throw new EntityNotFoundException(nameof(Movie), "Id", movieGenre.MovieId.ToString());
 
             if (_dbContext.MovieGenre.Any(mg => mg.MovieId == movieGenre.MovieId && mg.GenreId == movieGenre.GenreId))
-                throw new AlreadyExistEntityException(nameof(MovieGenre), $"{movieGenre.MovieId} (movie), {movieGenre.GenreId} (genre)");
+                throw new AlreadyExistEntityException(nameof(MovieGenre), "(MovieId, GenreId)" , $"({movieGenre.MovieId}, {movieGenre.GenreId})");
 
             movieGenre.Movie = movie;
             movieGenre.Genre = genre;

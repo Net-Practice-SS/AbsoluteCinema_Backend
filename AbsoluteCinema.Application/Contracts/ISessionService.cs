@@ -1,5 +1,6 @@
-﻿using AbsoluteCinema.Application.DTO.Entities;
-using AbsoluteCinema.Application.DTO.SessionsDTO;
+﻿using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
+using AbsoluteCinema.Application.DTO.Entities;
+
 
 namespace AbsoluteCinema.Application.Contracts
 {
