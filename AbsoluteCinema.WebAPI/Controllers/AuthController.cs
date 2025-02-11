@@ -1,5 +1,7 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.AuthDTO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers {
@@ -31,6 +33,16 @@ namespace AbsoluteCinema.WebAPI.Controllers {
                 var token = _jwtService.CreateJWTToken(claims);
                 return Ok(new { result, token });
             }
+            return BadRequest(result);
+        }
+        
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "Admin")]
+        public async Task<ActionResult> AssignRoleById([FromBody] AssignRoleByIdDto assignRoleDto)
+        {
+            var result = await _authService.AssignRoleToUserByIdAsync(assignRoleDto.UserId, assignRoleDto.RoleName);
+            if (result.Succeeded)
+                return Ok(result);
             return BadRequest(result);
         }
     }

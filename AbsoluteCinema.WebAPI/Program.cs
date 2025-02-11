@@ -3,8 +3,12 @@ using AbsoluteCinema.Application;
 using AbsoluteCinema.Domain;
 using System.Text.Json.Serialization;
 using AbsoluteCinema.Infrastructure.DbContexts;
+using AbsoluteCinema.Infrastructure.Identity.Data;
 using AbsoluteCinema.Infrastructure.Seeders;
 using AbsoluteCinema.WebAPI.Filters;
+using Microsoft.AspNetCore.Identity;
+using AbsoluteCinema.WebAPI.Swagger;
+using Microsoft.OpenApi.Models;
 
 string reactClientCORSPolicy = "reactClientCORSPolicy";
 
@@ -32,22 +36,44 @@ builder.Services.AddControllers(options =>
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.AddSecurityDefinition("Bearer",
+        new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = @"Bearer (paste here your token (remove all brackets) )",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+        });
+
+    o.OperationFilter<AuthorizeCheckOperationFilter>();
+
+    o.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Title = "AbsoluteCinema API - v1",
+        Version = "v1"
+    });
+});
 
 //Dependency Injection
 builder.Services.AddDomainDI();
 builder.Services.AddApplicationDI(builder.Configuration);
 builder.Services.AddInfrastructureDI(builder.Configuration);
 
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
     
     // Запускаем сидер для статусов тикетов
     await TicketStatusSeeder.SeedTicketStatusesAsync(context);
+    
+    // Запускаем сидер для ролей
+    await RoleSeeder.SeedRolesAsync(roleManager);
 }
 
 app.UseCors(reactClientCORSPolicy);

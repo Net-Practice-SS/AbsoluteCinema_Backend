@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using AbsoluteCinema.Domain.Constants;
 
 namespace AbsoluteCinema.Application
 {
@@ -17,15 +18,13 @@ namespace AbsoluteCinema.Application
             // Подключаем флюент-валидаторы, ищет все валидаторы там где лежит LoginDtoValidator
             services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>(ServiceLifetime.Transient);
 
+            // Підлючення сервісів
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IHallService, HallService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IActorService, ActorService>();
-
-            //services.AddScoped<IAuthService, AuthService>();
-
 
             //Token authentication with lifetime and issuer validation rules
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
@@ -41,12 +40,12 @@ namespace AbsoluteCinema.Application
             });
 
             services.AddAuthorization(options => {
-                options.AddPolicy("UserOrAdmin", policy => {
-                    policy.RequireRole("User", "Admin");
+                options.AddPolicy(Policy.UserPolicy, policy => {
+                    policy.RequireRole(Role.User, Role.Admin);
                 });
 
-                options.AddPolicy("Admin", policy => {
-                    policy.RequireRole("Admin");
+                options.AddPolicy(Policy.AdminPolicy, policy => {
+                    policy.RequireRole(Role.Admin);
                 });
             });
 
