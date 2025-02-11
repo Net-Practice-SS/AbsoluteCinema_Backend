@@ -51,7 +51,7 @@ namespace AbsoluteCinema.Infrastructure.Services {
         
         public async Task<IdentityResult> SignUpAsync(RegisterDto userRegisterDto) {
             var user = await _userManager.FindByEmailAsync(userRegisterDto.Email);
-            var userRole = _configuration["DefaultUserRole"];
+            var userRole = _configuration["DefaultUserRole"]!;
 
             if (user != null) {
                 var duplicateEmailError = new IdentityError {

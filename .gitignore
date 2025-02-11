@@ -278,3 +278,4 @@ appsettings.development.json
 appsettings.production.json
 
 AbsoluteCinema.Infrastructure/Migrations/
+AbsoluteCinema.Infrastructure/Migrations

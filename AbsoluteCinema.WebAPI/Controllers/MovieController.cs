@@ -17,7 +17,6 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult> GetMovieById(int id)
         {
             var movieDto = await _movieService.GetMovieByIdAsync(id);

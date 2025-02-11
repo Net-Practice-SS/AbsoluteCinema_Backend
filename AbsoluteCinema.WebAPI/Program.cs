@@ -7,6 +7,8 @@ using AbsoluteCinema.Infrastructure.Identity.Data;
 using AbsoluteCinema.Infrastructure.Seeders;
 using AbsoluteCinema.WebAPI.Filters;
 using Microsoft.AspNetCore.Identity;
+using AbsoluteCinema.WebAPI.Swagger;
+using Microsoft.OpenApi.Models;
 
 string reactClientCORSPolicy = "reactClientCORSPolicy";
 
@@ -34,7 +36,26 @@ builder.Services.AddControllers(options =>
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.AddSecurityDefinition("Bearer",
+        new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = @"Bearer (paste here your token (remove all brackets) )",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+        });
+
+    o.OperationFilter<AuthorizeCheckOperationFilter>();
+
+    o.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Title = "AbsoluteCinema API - v1",
+        Version = "v1"
+    });
+});
 
 //Dependency Injection
 builder.Services.AddDomainDI();

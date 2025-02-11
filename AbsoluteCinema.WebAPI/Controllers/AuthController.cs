@@ -1,5 +1,6 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.AuthDTO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +37,7 @@ namespace AbsoluteCinema.WebAPI.Controllers {
         }
         
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "Admin")]
         public async Task<ActionResult> AssignRoleById([FromBody] AssignRoleByIdDto assignRoleDto)
         {
             var result = await _authService.AssignRoleToUserByIdAsync(assignRoleDto.UserId, assignRoleDto.RoleName);
