@@ -2,6 +2,6 @@
 
 public class AssignRoleByIdDto
 {
-    public string  UserId { get; set; }
+    public string UserId { get; set; } = null!;
     public string RoleName { get; set; } = null!;
 }

@@ -5,6 +5,7 @@ using AbsoluteCinema.Infrastructure.Identity.Data;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using AbsoluteCinema.Domain.Constants;
 
 namespace AbsoluteCinema.Infrastructure.Services {
     public class AuthService : IAuthService {
@@ -51,7 +52,7 @@ namespace AbsoluteCinema.Infrastructure.Services {
         
         public async Task<IdentityResult> SignUpAsync(RegisterDto userRegisterDto) {
             var user = await _userManager.FindByEmailAsync(userRegisterDto.Email);
-            var userRole = _configuration["DefaultUserRole"]!;
+            var userRole = Role.User;
 
             if (user != null) {
                 var duplicateEmailError = new IdentityError {
@@ -118,7 +119,7 @@ namespace AbsoluteCinema.Infrastructure.Services {
                 });
             }
             var currentRole = await _userManager.GetRolesAsync(user);
-            await _userManager.RemoveFromRoleAsync(user, currentRole.First());
+            await _userManager.RemoveFromRolesAsync(user, currentRole);
             
             var result = await _userManager.AddToRoleAsync(user, roleName);
             return result;

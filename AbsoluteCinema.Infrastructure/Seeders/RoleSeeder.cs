@@ -1,4 +1,4 @@
-﻿using AbsoluteCinema.Infrastructure.DbContexts;
+﻿using AbsoluteCinema.Domain.Constants;
 using AbsoluteCinema.Infrastructure.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,7 +8,7 @@ public class RoleSeeder
 {
     public static async Task SeedRolesAsync(RoleManager<ApplicationRole> roleManager)
     {
-        string[] roleNames = ["User", "Admin"];
+        string[] roleNames = [Role.User, Role.Admin];
 
         foreach (var roleName in roleNames)
         {
