@@ -15,5 +15,6 @@ namespace AbsoluteCinema.Application.DTO.MoviesDTO
         public string? PosterPath { get; set; } = null!;
         public MovieLanguageEnum? Language { get; set; } = null!;
         public DateTime? ReleaseDate { get; set; } = null!;
+        public string? TrailerPath { get; set; } = null!;
     }
 }
