@@ -79,6 +79,5 @@ namespace AbsoluteCinema.Application.Services
             var sessions = await query.ToListAsync();
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
-
     }
 }
