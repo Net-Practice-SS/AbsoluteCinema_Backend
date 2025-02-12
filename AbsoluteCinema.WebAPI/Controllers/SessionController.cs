@@ -23,7 +23,7 @@ public class SessionController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllSessions(GetAllSessionDto getAllTicketsDto)
+    public async Task<ActionResult> GetAllSessions([FromQuery] GetAllSessionDto getAllTicketsDto)
     {
         var tickets = await _sessionService.GetAllSessionsAsync(getAllTicketsDto);
         return Ok(tickets);
