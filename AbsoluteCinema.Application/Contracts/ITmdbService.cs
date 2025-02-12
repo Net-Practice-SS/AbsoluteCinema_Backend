@@ -7,5 +7,6 @@ namespace AbsoluteCinema.Application.Contracts
         public Task<IEnumerable<GenreDto>> GetGenresAsync();
         public Task<IEnumerable<MovieDto>> GetMoviesAsync(int page = 1);
         public Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId);
+        public Task<string> GetMovieTrailerAsync(int movieId);
     }
 }

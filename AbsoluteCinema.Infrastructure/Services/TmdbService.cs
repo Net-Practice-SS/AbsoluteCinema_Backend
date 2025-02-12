@@ -35,7 +35,7 @@ namespace AbsoluteCinema.Infrastructure.Services
         public async Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId)
         {
             var data = await GetFromTmdbAsync<TmdbCastResponse>($"movie/{movieId}/credits");
-            
+
             if (data?.Cast == null)
             {
                 throw new EntityNotFoundException(nameof(TmdbCastResponse), "MovieId", movieId.ToString());
@@ -69,6 +69,19 @@ namespace AbsoluteCinema.Infrastructure.Services
 
             var entity = _mapper.Map<IEnumerable<MovieDto>>(data.Results);
             return entity;
+        }
+
+        public async Task<string> GetMovieTrailerAsync(int movieId)
+        {
+            var data = await GetFromTmdbAsync<TmdbVideoResponse>($"movie/{movieId}/videos");
+            var trailer = data?.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube" && v.Official);
+
+            if (trailer == null)
+            {
+                throw new EntityNotFoundException("Trailer", "MovieId", movieId.ToString());
+            }
+
+            return $"https://www.youtube.com/watch?v={trailer.Key}";
         }
     }
 }
