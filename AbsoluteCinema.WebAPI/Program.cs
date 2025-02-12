@@ -76,6 +76,8 @@ using (var scope = app.Services.CreateScope())
     await RoleSeeder.SeedRolesAsync(roleManager);
 }
 
+await TmdbSeeder.SeedTmdbDataAsync(app.Services);
+
 app.UseCors(reactClientCORSPolicy);
 
 // Configure the HTTP request pipeline.

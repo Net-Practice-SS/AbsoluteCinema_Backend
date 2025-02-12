@@ -2,6 +2,6 @@
 {
     public class TmdbCastResponse
     {
-        public List<TmdbGenreDto> Cast { get; set; } = new();
+        public List<TmdbCastDto> Cast { get; set; } = new();
     }
 }

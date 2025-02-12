@@ -1,12 +1,12 @@
-﻿using AbsoluteCinema.Application.DTO.Entities;
+﻿using AbsoluteCinema.Application.DTO.TheMovieDatabaseDTO;
 
 namespace AbsoluteCinema.Application.Contracts
 {
     public interface ITmdbService
     {
-        public Task<IEnumerable<GenreDto>> GetGenresAsync();
-        public Task<IEnumerable<MovieDto>> GetMoviesAsync(int page = 1);
-        public Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId);
+        public Task<IEnumerable<TmdbGenreDto>> GetGenresAsync();
+        public Task<IEnumerable<TmdbMovieDto>> GetMoviesAsync(int page = 1);
+        public Task<IEnumerable<TmdbCastDto>> GetActorsAsync(int movieId);
         public Task<string> GetMovieTrailerAsync(int movieId);
     }
 }

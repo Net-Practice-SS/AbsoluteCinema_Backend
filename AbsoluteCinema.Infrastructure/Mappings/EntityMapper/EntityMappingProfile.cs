@@ -35,5 +35,8 @@ public class EntityMappingProfile : Profile
 
         // MovieGenre
         CreateMap<MovieGenre, MovieGenreDto>().ReverseMap();
+
+        // MovieActor
+        CreateMap<MovieActor, MovieActorDto>().ReverseMap();
     }
 }

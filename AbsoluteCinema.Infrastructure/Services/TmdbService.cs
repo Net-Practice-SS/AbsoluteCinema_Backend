@@ -1,5 +1,4 @@
 ﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TheMovieDatabaseDTO;
 using AbsoluteCinema.Domain.Exceptions;
 using AutoMapper;
@@ -25,14 +24,14 @@ namespace AbsoluteCinema.Infrastructure.Services
 
         private async Task<T?> GetFromTmdbAsync<T>(string endpoint)
         {
-            var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}?api_key={_apiKey}&language=en-US");
+            var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}?api_key={_apiKey}&language=en-US&");
             if (!response.IsSuccessStatusCode) return default;
 
             var json = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId)
+        public async Task<IEnumerable<TmdbCastDto>> GetActorsAsync(int movieId)
         {
             var data = await GetFromTmdbAsync<TmdbCastResponse>($"movie/{movieId}/credits");
 
@@ -41,11 +40,10 @@ namespace AbsoluteCinema.Infrastructure.Services
                 throw new EntityNotFoundException(nameof(TmdbCastResponse), "MovieId", movieId.ToString());
             }
 
-            var entity = _mapper.Map<IEnumerable<ActorDto>>(data.Cast);
-            return entity;
+            return data.Cast;
         }
 
-        public async Task<IEnumerable<GenreDto>> GetGenresAsync()
+        public async Task<IEnumerable<TmdbGenreDto>> GetGenresAsync()
         {
             var data = await GetFromTmdbAsync<TmdbGenreResponse>("genre/movie/list");
 
@@ -54,27 +52,25 @@ namespace AbsoluteCinema.Infrastructure.Services
                 throw new EntityNotFoundException(nameof(TmdbGenreResponse), string.Empty, string.Empty);
             }
 
-            var entity = _mapper.Map<IEnumerable<GenreDto>>(data.Genres);
-            return entity;
+            return data.Genres;
         }
 
-        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(int page = 1)
+        public async Task<IEnumerable<TmdbMovieDto>> GetMoviesAsync(int page = 1)
         {
-            var data = await GetFromTmdbAsync<TmdbMovieResponse>($"movie/popular&page={page}");
+            var data = await GetFromTmdbAsync<TmdbMovieResponse>($"movie/popular");
 
             if (data?.Results == null)
             {
                 throw new EntityNotFoundException(nameof(TmdbMovieResponse), "Page", page.ToString());
             }
 
-            var entity = _mapper.Map<IEnumerable<MovieDto>>(data.Results);
-            return entity;
+            return data.Results;
         }
 
         public async Task<string> GetMovieTrailerAsync(int movieId)
         {
             var data = await GetFromTmdbAsync<TmdbVideoResponse>($"movie/{movieId}/videos");
-            var trailer = data?.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube" && v.Official);
+            var trailer = data?.Results.FirstOrDefault(v => v.Type == "Trailer" && v.Site == "YouTube");
 
             if (trailer == null)
             {
