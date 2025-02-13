@@ -15,6 +15,7 @@
         Portuguese,
         Hindi,
         Ukrainian,
-        Turkish
+        Turkish,
+        Unknown
     }
 }

@@ -15,7 +15,7 @@ namespace AbsoluteCinema.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureDI(this IServiceCollection services,  IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
@@ -28,10 +28,14 @@ namespace AbsoluteCinema.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JWTService>();
-            
+            services.AddScoped<ITmdbService, TmdbService>();
+
             // Подключаем мапперы
             services.AddAutoMapper(typeof(LoginMappingProfile).Assembly);
-            
+
+            // Надаєм http client для the movie database сервису
+            services.AddHttpClient<TmdbService>();
+
             return services;
         }
     }

@@ -9,7 +9,8 @@ namespace AbsoluteCinema.Infrastructure.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<Session> builder) 
         {
             builder.HasKey(s => s.Id);
-            builder.Property(s => s.Date);
+            builder.Property(s => s.Date)
+                .HasColumnType("timestamp without time zone");
 
             // Relations with table Movie
             builder.HasOne(s => s.Movie)

@@ -74,7 +74,16 @@ using (var scope = app.Services.CreateScope())
     
     // Запускаем сидер для ролей
     await RoleSeeder.SeedRolesAsync(roleManager);
+
+    // Запускаем сидер для Hall
+    await HallSeeder.SeedHallsAsync(context);
+
+    // Запускаем сидер для Session
+    await SessionSeeder.SeedSessionsAsync(context);
 }
+
+// Запускаем сидер для заповнення даних Movie, Genres, Actors, MovieGenres, MovieActors
+await TmdbSeeder.SeedTmdbDataAsync(app.Services);
 
 app.UseCors(reactClientCORSPolicy);
 
