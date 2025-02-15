@@ -95,5 +95,39 @@ namespace AbsoluteCinema.Application.Services
             _unitOfWork.Repository<Ticket>().Update(ticket);
             await _unitOfWork.SaveChangesAsync();
         }
+        
+        public async Task<IEnumerable<TicketDto>> GetAllTicketsWithIncludeAsync()
+        {
+            var tickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(
+                include: query => query
+                    .Include(t => t.Session)
+                        .ThenInclude(s => s.Movie)
+                    .Include(t => t.Session)
+                        .ThenInclude(s => s.Hall)
+                    .Include(t => t.ApplicationUser)
+                    .Include(t => t.Status),
+                    orderBy: query => query.OrderBy(t => t.Id)
+            );
+            
+            return _mapper.Map<IEnumerable<TicketDto>>(tickets);;
+        }
+        
+        public async Task<IEnumerable<TicketDto>> GetTicketsForUserAsync(int userId)
+        {
+            var tickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(
+                include: query => query
+                    .Include(t => t.Session)
+                    .ThenInclude(s => s.Movie)
+                    .Include(t => t.Session)
+                    .ThenInclude(s => s.Hall)
+                    .Include(t => t.ApplicationUser)
+                    .Include(t => t.Status),
+                    orderBy: query => query.OrderBy(t => t.Id)
+            );
+            
+            tickets = tickets.Where(t => t.UserId == userId);
+            
+            return _mapper.Map<IEnumerable<TicketDto>>(tickets);;
+        }
     }
 }

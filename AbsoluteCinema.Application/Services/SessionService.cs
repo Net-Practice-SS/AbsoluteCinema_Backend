@@ -97,8 +97,9 @@ namespace AbsoluteCinema.Application.Services
         public async Task<IEnumerable<SessionDto>> GetAllSessionsWithIncludeAsync()
         {
             var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(
-                include: query => 
-                    query.Include(s => s.Movie).Include(s => s.Hall)
+                include: query => query
+                    .Include(s => s.Movie)
+                    .Include(s => s.Hall)
             );
             
             var sessionFrontDtos = _mapper.Map<IEnumerable<SessionDto>>(sessions);

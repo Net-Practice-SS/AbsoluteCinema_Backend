@@ -64,4 +64,18 @@ public class TicketController : BaseController
         await _ticketService.UpdateTicketStatusAsync(ticketId, ticketStatusIdDto);
         return Ok();
     }
+
+    [HttpGet]
+    public async Task<ActionResult> GetAllTicketsForAdmin()
+    {
+        var tickets = await _ticketService.GetAllTicketsWithIncludeAsync();
+        return Ok(tickets);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult> GetAllTicketsForUser(int userId)
+    {
+        var tickets = await _ticketService.GetTicketsForUserAsync(userId);
+        return Ok(tickets);
+    }
 }
