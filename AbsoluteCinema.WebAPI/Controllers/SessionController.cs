@@ -70,5 +70,12 @@ public class SessionController : BaseController
         var tickets = await _sessionService.GetAllSessionsWithIncludeAsync();
         return Ok(tickets);
     }
+
+    [HttpGet]
+    public async Task<ActionResult> GetUpcomingSessionsByMovie(int movieId)
+    {
+        var tickets = await _sessionService.GetUpcomingSessionsByMovieAsync(movieId);
+        return Ok(tickets);
+    }
 }
 

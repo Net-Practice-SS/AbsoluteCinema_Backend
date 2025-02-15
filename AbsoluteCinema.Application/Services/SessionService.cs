@@ -105,5 +105,20 @@ namespace AbsoluteCinema.Application.Services
             var sessionFrontDtos = _mapper.Map<IEnumerable<SessionDto>>(sessions);
             return sessionFrontDtos;
         }
+        
+        public async Task<IEnumerable<SessionDto>> GetUpcomingSessionsByMovieAsync(int movieId)
+        {
+            var now = DateTime.UtcNow;
+            now = DateTime.SpecifyKind(now, DateTimeKind.Unspecified);
+
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(
+                orderBy: query => query.OrderBy(s => s.Date),
+                include: query => query
+                    .Include(s => s.Hall)
+                    .Where(s => s.Date >= now && s.MovieId == movieId)
+            );
+
+            return _mapper.Map<IEnumerable<SessionDto>>(sessions);
+        }
     }
 }
