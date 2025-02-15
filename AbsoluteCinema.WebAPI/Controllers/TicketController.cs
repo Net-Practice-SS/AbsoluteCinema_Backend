@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Application.Contracts;
+using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TicketsDTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,5 +56,12 @@ public class TicketController : BaseController
     {
         var tickets = await _ticketService.GetTicketWithStrategyAsync(getTicketWithStrategyDto);
         return Ok(tickets);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateTicketStatus([FromQuery] int ticketId, [FromQuery] TicketStatusIdDto ticketStatusIdDto)
+    {
+        await _ticketService.UpdateTicketStatusAsync(ticketId, ticketStatusIdDto);
+        return Ok();
     }
 }

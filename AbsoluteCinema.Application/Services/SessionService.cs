@@ -45,8 +45,7 @@ namespace AbsoluteCinema.Application.Services
             var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy);
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
-
-
+        
         public async Task<SessionDto?> GetSessionByIdAsync(int id)
         {
             var session = await _unitOfWork.Repository<Session>().GetByIdAsync(id);
@@ -93,6 +92,17 @@ namespace AbsoluteCinema.Application.Services
             var sessions = await query.ToListAsync();
             
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
+        }
+
+        public async Task<IEnumerable<SessionDto>> GetAllSessionsWithIncludeAsync()
+        {
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(
+                include: query => 
+                    query.Include(s => s.Movie).Include(s => s.Hall)
+            );
+            
+            var sessionFrontDtos = _mapper.Map<IEnumerable<SessionDto>>(sessions);
+            return sessionFrontDtos;
         }
     }
 }

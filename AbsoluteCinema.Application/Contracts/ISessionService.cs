@@ -13,5 +13,6 @@ namespace AbsoluteCinema.Application.Contracts
         Task<int> CreateSessionAsync(CreateSessionDto sessionDto);
         Task<IEnumerable<SessionDto>> GetSessionWithStrategyAsync(GetSessionWithStrategyDto getSessionWithStrategyDto);
         Task<IEnumerable<SessionDto>> GetSessionsByDateAsync(DateTime date);
+        Task<IEnumerable<SessionDto>> GetAllSessionsWithIncludeAsync();
     }
 }
