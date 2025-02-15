@@ -56,5 +56,12 @@ public class SessionController : BaseController
         var tickets = await _sessionService.GetSessionWithStrategyAsync(getTicketWithStrategyDto);
         return Ok(tickets);
     }
+
+    [HttpGet]
+    public async Task<ActionResult> GetSessionByDate(DateTime date)
+    {
+        var tickets = await _sessionService.GetSessionsByDateAsync(date);
+        return Ok(tickets);
+    }
 }
 

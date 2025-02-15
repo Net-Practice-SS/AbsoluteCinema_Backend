@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
 
 
+
 namespace AbsoluteCinema.Application.Services
 {
     public class SessionService : ISessionService
@@ -77,6 +78,20 @@ namespace AbsoluteCinema.Application.Services
             var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy);
 
             var sessions = await query.ToListAsync();
+            return _mapper.Map<IEnumerable<SessionDto>>(sessions);
+        }
+        
+        public async Task<IEnumerable<SessionDto>> GetSessionsByDateAsync(DateTime date)
+        {
+            var strategy = new SessionStrategy(date: date);
+            
+            Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
+                query => query.OrderBy("Date asc");
+            
+            var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy);
+            
+            var sessions = await query.ToListAsync();
+            
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
     }
