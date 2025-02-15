@@ -3,6 +3,9 @@ using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.GenresDTO;
 using AbsoluteCinema.Application.DTO.HallsDTO;
 using AbsoluteCinema.Application.Services;
+using AbsoluteCinema.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers
@@ -31,6 +34,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> CreateGenre([FromForm] CreateGenreDto createGenreDto)
         {
             var id = await _genreService.CreateGenreAsync(createGenreDto);
@@ -38,6 +42,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> AddMovieToGenre([FromQuery] MovieGenreDto movieGenreDto)
         {
             await _genreService.AddMovieToGenreAsync(movieGenreDto);
@@ -45,6 +50,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> DeleteGenre(int id)
         {
             await _genreService.DeleteGenreAsync(id);
@@ -52,6 +58,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> DeleteMovieFromGenre([FromQuery] MovieGenreDto movieGenreDto)
         {
             await _genreService.DeleteMovieFromGenreAsync(movieGenreDto);
@@ -59,6 +66,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> UpdateGenre([FromForm] UpdateGenreDto updateGenreDto)
         {
             await _genreService.UpdateGenreAsync(updateGenreDto);
