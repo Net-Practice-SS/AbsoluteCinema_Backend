@@ -23,7 +23,7 @@ public class TicketController : BaseController
     }
         
     [HttpGet]
-    public async Task<ActionResult> GetAllTickets(GetAllTicketsDto getAllTicketsDto)
+    public async Task<ActionResult> GetAllTickets([FromQuery]GetAllTicketsDto getAllTicketsDto)
     {
         var tickets = await _ticketService.GetAllTicketsAsync(getAllTicketsDto);
         return Ok(tickets);
