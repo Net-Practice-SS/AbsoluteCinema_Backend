@@ -1,4 +1,4 @@
-﻿using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
+﻿using AbsoluteCinema.Application.DTO.SessionsDTO;
 using FluentValidation;
 
 namespace AbsoluteCinema.Application.Validators.EntityValidators;

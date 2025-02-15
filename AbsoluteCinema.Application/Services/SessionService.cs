@@ -6,7 +6,7 @@ using System.Linq.Dynamic.Core;
 using AbsoluteCinema.Domain.Exceptions;
 using AbsoluteCinema.Domain.Strategies;
 using Microsoft.EntityFrameworkCore;
-using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
+using AbsoluteCinema.Application.DTO.SessionsDTO;
 
 
 namespace AbsoluteCinema.Application.Services
