@@ -1,5 +1,6 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TicketsDTO;
+using AbsoluteCinema.Domain.Entities;
 
 namespace AbsoluteCinema.Application.Contracts;
 
@@ -11,4 +12,7 @@ public interface ITicketService
     Task UpdateTicketAsync(UpdateTicketDto updateTicketDto);
     Task<int> CreateTicketAsync(CreateTicketDto createTicketDto);
     Task<IEnumerable<TicketDto>> GetTicketWithStrategyAsync(GetTicketWithStrategyDto getTicketWithStrategyDto);
+    Task UpdateTicketStatusAsync(int ticketId, TicketStatusIdDto ticketStatusIdDto);
+    Task<IEnumerable<TicketDto>> GetAllTicketsWithIncludeAsync();
+    Task<IEnumerable<TicketDto>> GetTicketsForUserAsync(int userId);
 }

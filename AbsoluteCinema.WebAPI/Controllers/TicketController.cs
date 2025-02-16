@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Application.Contracts;
+using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TicketsDTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ public class TicketController : BaseController
     }
         
     [HttpGet]
-    public async Task<ActionResult> GetAllTickets(GetAllTicketsDto getAllTicketsDto)
+    public async Task<ActionResult> GetAllTickets([FromQuery]GetAllTicketsDto getAllTicketsDto)
     {
         var tickets = await _ticketService.GetAllTicketsAsync(getAllTicketsDto);
         return Ok(tickets);
@@ -54,6 +55,27 @@ public class TicketController : BaseController
     public async Task<ActionResult> GetTicketWithStrategy([FromQuery] GetTicketWithStrategyDto getTicketWithStrategyDto)
     {
         var tickets = await _ticketService.GetTicketWithStrategyAsync(getTicketWithStrategyDto);
+        return Ok(tickets);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateTicketStatus([FromQuery] int ticketId, [FromQuery] TicketStatusIdDto ticketStatusIdDto)
+    {
+        await _ticketService.UpdateTicketStatusAsync(ticketId, ticketStatusIdDto);
+        return Ok();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetAllTicketsForAdmin()
+    {
+        var tickets = await _ticketService.GetAllTicketsWithIncludeAsync();
+        return Ok(tickets);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult> GetAllTicketsForUser(int userId)
+    {
+        var tickets = await _ticketService.GetTicketsForUserAsync(userId);
         return Ok(tickets);
     }
 }
