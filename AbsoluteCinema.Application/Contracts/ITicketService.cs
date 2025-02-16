@@ -1,6 +1,5 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TicketsDTO;
-using AbsoluteCinema.Domain.Entities;
 
 namespace AbsoluteCinema.Application.Contracts;
 

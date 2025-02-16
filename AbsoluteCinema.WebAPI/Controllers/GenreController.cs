@@ -1,8 +1,6 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.GenresDTO;
-using AbsoluteCinema.Application.DTO.HallsDTO;
-using AbsoluteCinema.Application.Services;
 using AbsoluteCinema.Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

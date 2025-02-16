@@ -1,5 +1,4 @@
 ﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TicketsDTO;
 using AbsoluteCinema.Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -72,7 +71,7 @@ public class TicketController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllTicketsForAdmin(GetAllTicketsDto getAllTicketsDto)
+    public async Task<ActionResult> GetAllTicketsForAdmin([FromQuery]GetAllTicketsDto getAllTicketsDto)
     {
         var tickets = await _ticketService.GetAllTicketsWithIncludeAsync(getAllTicketsDto);
         return Ok(tickets);

@@ -1,5 +1,4 @@
 ﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
