@@ -63,6 +63,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> AddGenreToMovie([FromQuery] MovieGenreDto movieGenreDto)
         {
             await _movieService.AddGenreToMovieAsync(movieGenreDto);
@@ -70,6 +71,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> DeleteGenreFromMovie([FromQuery] MovieGenreDto movieGenreDto)
         {
             await _movieService.DeleteGenreFromMovieAsync(movieGenreDto);

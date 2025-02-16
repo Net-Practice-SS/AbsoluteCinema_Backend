@@ -1,6 +1,9 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.TicketsDTO;
+using AbsoluteCinema.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers;
@@ -31,6 +34,7 @@ public class TicketController : BaseController
     }
         
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.UserPolicy)]
     public async Task<ActionResult> CreateTicket([FromForm] CreateTicketDto createTicketDto)
     {
         var id = await _ticketService.CreateTicketAsync(createTicketDto);
@@ -38,6 +42,7 @@ public class TicketController : BaseController
     }
         
     [HttpDelete]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
     public async Task<ActionResult> DeleteTicket(int id)
     {
         await _ticketService.DeleteTicketAsync(id);
@@ -45,6 +50,7 @@ public class TicketController : BaseController
     }
         
     [HttpPut]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
     public async Task<ActionResult> UpdateTicket([FromForm] UpdateTicketDto updateTicketDto)
     {
         await _ticketService.UpdateTicketAsync(updateTicketDto);
