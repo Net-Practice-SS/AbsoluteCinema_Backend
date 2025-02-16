@@ -19,5 +19,6 @@ namespace AbsoluteCinema.Application.Contracts
         Task AddActorToMovieAsync(MovieActorDto movieActorDto);
         Task DeleteActorFromMovieAsync(MovieActorDto movieActorDto);
         Task<IEnumerable<MovieDto>> GetAllMoviesWithIncludeAsync();
+        Task<IEnumerable<MovieDto>> GetPersonalizedMovieSuggestionsAsync(int userId);
     }
 }

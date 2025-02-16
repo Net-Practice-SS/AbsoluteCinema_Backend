@@ -84,6 +84,12 @@ namespace AbsoluteCinema.WebAPI.Controllers
             var movies = await _movieService.GetAllMoviesWithIncludeAsync();
             return Ok(movies);
         }
-
+        
+        [HttpGet]
+        public async Task<ActionResult> GetPersonalizedMovieSuggestions(int userId)
+        {
+            var movies = await _movieService.GetPersonalizedMovieSuggestionsAsync(userId);
+            return Ok(movies);
+        }
     }
 }
