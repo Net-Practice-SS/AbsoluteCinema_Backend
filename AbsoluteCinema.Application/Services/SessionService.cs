@@ -42,7 +42,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
                 query => query.OrderBy($"{getDto.OrderByProperty} {getDto.OrderDirection}");
 
-            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy);
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy, include: null, page: getDto.Page, getDto.PageSize);
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
         
@@ -94,12 +94,16 @@ namespace AbsoluteCinema.Application.Services
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
 
-        public async Task<IEnumerable<SessionDto>> GetAllSessionsWithIncludeAsync()
+        public async Task<IEnumerable<SessionDto>> GetAllSessionsWithIncludeAsync(GetAllSessionDto getSessionDto)
         {
-            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(
+            Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
+                query => query.OrderBy($"{getSessionDto.OrderByProperty} {getSessionDto.OrderDirection}");
+            
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy,
                 include: query => query
                     .Include(s => s.Movie)
-                    .Include(s => s.Hall)
+                    .Include(s => s.Hall), 
+                page: getSessionDto.Page, getSessionDto.PageSize
             );
             
             var sessionFrontDtos = _mapper.Map<IEnumerable<SessionDto>>(sessions);

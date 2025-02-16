@@ -42,7 +42,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Hall>, IOrderedQueryable<Hall>> orderBy =
                 query => query.OrderBy($"{getAllHallDto.OrderByProperty} {getAllHallDto.OrderDirection}");
 
-            var halls = await _unitOfWork.Repository<Hall>().GetAllAsync(orderBy);
+            var halls = await _unitOfWork.Repository<Hall>().GetAllAsync(orderBy, include: null, page: getAllHallDto.Page, getAllHallDto.PageSize);
             return _mapper.Map<IEnumerable<HallDto>>(halls);
         }
 

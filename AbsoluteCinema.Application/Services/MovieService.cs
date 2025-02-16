@@ -9,6 +9,8 @@ using AbsoluteCinema.Domain.Strategies;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using MovieActorDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieActorDto;
+using MovieGenreDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieGenreDto;
 
 namespace AbsoluteCinema.Application.Services
 {
@@ -71,7 +73,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy =
                 query => query.OrderBy($"{getAllMoviesDto.OrderByProperty} {getAllMoviesDto.OrderDirection}");
 
-            var movies = await _unitOfWork.MovieRepository.GetAllAsync(orderBy);
+            var movies = await _unitOfWork.MovieRepository.GetAllAsync(orderBy, include: null, page: getAllMoviesDto.Page, getAllMoviesDto.PageSize);
             return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
 
@@ -121,6 +123,19 @@ namespace AbsoluteCinema.Application.Services
             var movie = _mapper.Map<Movie>(currentMovieDto);
             _unitOfWork.MovieRepository.Update(movie);
             await _unitOfWork.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<MovieDto>> GetAllMoviesWithIncludeAsync()
+        {
+            var movieDto = await _unitOfWork.Repository<Movie>().GetAllAsync(
+                include: query => query
+                    .Include(s => s.MovieGenre)
+                        .ThenInclude(mg => mg.Genre)
+                    .Include(s => s.MovieActor)
+                        .ThenInclude(ma => ma.Actor)
+            );
+            
+            var movies = _mapper.Map<IEnumerable<MovieDto>>(movieDto);
+            return movies;
         }
     }
 }

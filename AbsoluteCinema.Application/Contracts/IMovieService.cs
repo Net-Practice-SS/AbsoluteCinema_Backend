@@ -1,6 +1,8 @@
 ﻿using AbsoluteCinema.Application.DTO.Entities;
 using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
+using MovieActorDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieActorDto;
+using MovieGenreDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieGenreDto;
 
 namespace AbsoluteCinema.Application.Contracts
 {
@@ -14,8 +16,8 @@ namespace AbsoluteCinema.Application.Contracts
         Task<IEnumerable<MovieDto>> GetMovieWithStrategyAsync(GetMovieWithStrategyDto getMovieWithStrategyDto);
         Task AddGenreToMovieAsync(MovieGenreDto movieGenreDto);
         Task DeleteGenreFromMovieAsync(MovieGenreDto movieGenreDto);
-        
         Task AddActorToMovieAsync(MovieActorDto movieActorDto);
         Task DeleteActorFromMovieAsync(MovieActorDto movieActorDto);
+        Task<IEnumerable<MovieDto>> GetAllMoviesWithIncludeAsync();
     }
 }

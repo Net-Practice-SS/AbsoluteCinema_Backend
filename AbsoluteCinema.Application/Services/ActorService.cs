@@ -57,7 +57,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Actor>, IOrderedQueryable<Actor>> orderBy =
                 query => query.OrderBy($"{getAllActorDto.OrderByProperty} {getAllActorDto.OrderDirection}");
 
-            var actors = await _unitOfWork.ActorRepository.GetAllAsync(orderBy);
+            var actors = await _unitOfWork.ActorRepository.GetAllAsync(orderBy, include: null, page: getAllActorDto.Page, getAllActorDto.PageSize);
             return _mapper.Map<IEnumerable<ActorDto>>(actors);
         }
 
