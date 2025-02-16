@@ -57,9 +57,9 @@ public class SessionController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetSessionWithStrategy([FromQuery] GetSessionWithStrategyDto getTicketWithStrategyDto)
+    public async Task<ActionResult> GetSessionWithStrategy([FromQuery] GetSessionWithStrategyDto getSessionWithStrategyDto)
     {
-        var tickets = await _sessionService.GetSessionWithStrategyAsync(getTicketWithStrategyDto);
+        var tickets = await _sessionService.GetSessionWithStrategyAsync(getSessionWithStrategyDto);
         return Ok(tickets);
     }
 
@@ -71,9 +71,9 @@ public class SessionController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetSessionsForAdmin()
+    public async Task<ActionResult> GetSessionsForAdmin([FromQuery] GetAllSessionDto getAllSessionDto)
     {
-        var tickets = await _sessionService.GetAllSessionsWithIncludeAsync();
+        var tickets = await _sessionService.GetAllSessionsWithIncludeAsync(getAllSessionDto);
         return Ok(tickets);
     }
 

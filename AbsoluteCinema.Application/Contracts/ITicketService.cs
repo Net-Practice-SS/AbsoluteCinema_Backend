@@ -13,6 +13,6 @@ public interface ITicketService
     Task<int> CreateTicketAsync(CreateTicketDto createTicketDto);
     Task<IEnumerable<TicketDto>> GetTicketWithStrategyAsync(GetTicketWithStrategyDto getTicketWithStrategyDto);
     Task UpdateTicketStatusAsync(int ticketId, TicketStatusIdDto ticketStatusIdDto);
-    Task<IEnumerable<TicketDto>> GetAllTicketsWithIncludeAsync();
+    Task<IEnumerable<TicketDto>> GetAllTicketsWithIncludeAsync(GetAllTicketsDto getAllTicketsDto);
     Task<IEnumerable<TicketDto>> GetTicketsForUserAsync(int userId);
 }

@@ -72,9 +72,9 @@ public class TicketController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllTicketsForAdmin()
+    public async Task<ActionResult> GetAllTicketsForAdmin(GetAllTicketsDto getAllTicketsDto)
     {
-        var tickets = await _ticketService.GetAllTicketsWithIncludeAsync();
+        var tickets = await _ticketService.GetAllTicketsWithIncludeAsync(getAllTicketsDto);
         return Ok(tickets);
     }
     

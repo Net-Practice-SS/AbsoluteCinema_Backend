@@ -52,7 +52,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Ticket>, IOrderedQueryable<Ticket>> orderBy =
                 query => query.OrderBy($"{getAllTicketsDto.OrderByProperty} {getAllTicketsDto.OrderDirection}");
             
-            var tickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(orderBy);
+            var tickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(orderBy, include: null, page: getAllTicketsDto.Page, getAllTicketsDto.PageSize);
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
         }
         
@@ -96,9 +96,10 @@ namespace AbsoluteCinema.Application.Services
             await _unitOfWork.SaveChangesAsync();
         }
         
-        public async Task<IEnumerable<TicketDto>> GetAllTicketsWithIncludeAsync()
+        public async Task<IEnumerable<TicketDto>> GetAllTicketsWithIncludeAsync(GetAllTicketsDto getAllTicketsDto)
         {
             var tickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(
+                orderBy: query => query.OrderBy(t => t.Id),
                 include: query => query
                     .Include(t => t.Session)
                         .ThenInclude(s => s.Movie)
@@ -106,7 +107,8 @@ namespace AbsoluteCinema.Application.Services
                         .ThenInclude(s => s.Hall)
                     .Include(t => t.ApplicationUser)
                     .Include(t => t.Status),
-                    orderBy: query => query.OrderBy(t => t.Id)
+                page: getAllTicketsDto.Page, getAllTicketsDto.PageSize
+                    
             );
             
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);;

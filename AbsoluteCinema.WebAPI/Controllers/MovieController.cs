@@ -5,6 +5,7 @@ using AbsoluteCinema.Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MovieGenreDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieGenreDto;
 
 namespace AbsoluteCinema.WebAPI.Controllers
 {
@@ -77,5 +78,13 @@ namespace AbsoluteCinema.WebAPI.Controllers
             await _movieService.DeleteGenreFromMovieAsync(movieGenreDto);
             return Ok($"Genre with id: {movieGenreDto.GenreId} deleted from movie with id {movieGenreDto.MovieId}");
         }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetAllMoviesForAdmin()
+        {
+            var movies = await _movieService.GetAllMoviesWithIncludeAsync();
+            return Ok(movies);
+        }
+
     }
 }

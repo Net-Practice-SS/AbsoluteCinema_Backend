@@ -27,10 +27,11 @@ public class UserService : IUserService
 
      public async Task<IEnumerable<UserDto>> GetAllUsersAsync(GetAllUsersDto getAllUsersDto)
         {
-            var usersQuery = _userManager.Users;
+             Func<IQueryable<ApplicationUser>, IOrderedQueryable<ApplicationUser>> orderBy =
+                 query => query.OrderBy($"{getAllUsersDto.OrderByProperty} {getAllUsersDto.OrderDirection}");
+             
+            var users = await _unitOfWork.Repository<ApplicationUser>().GetAllAsync(orderBy, include: null, page: getAllUsersDto.Page, getAllUsersDto.PageSize);
             
-            var orderedQuery = usersQuery.OrderBy($"{getAllUsersDto.OrderByProperty} {getAllUsersDto.OrderDirection}");
-            var users = await orderedQuery.ToListAsync();
             return _mapper.Map<IEnumerable<UserDto>>(users);
         }
         
