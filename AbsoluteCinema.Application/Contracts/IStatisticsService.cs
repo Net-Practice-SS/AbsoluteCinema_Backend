@@ -4,6 +4,6 @@ public interface IStatisticsService
 {
     Task<double> GetRevenueAsync(DateTime? startDate, DateTime? endDate);
     Task<IEnumerable<TopMovieDto>> GetTopMoviesByPeriodAsync(DateTime startDate, DateTime endDate, int quantityOfMoviesInTop);
-    Task<HallDto> GetMostPopularHallAsync();
+    Task<HallDto> GetMostPopularHallAsync(DateTime startDate, DateTime endDate);
     Task<IEnumerable<WeekdayDto>> GetBusiestDaysAsync();
 }

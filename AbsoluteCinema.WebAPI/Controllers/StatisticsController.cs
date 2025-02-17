@@ -26,9 +26,9 @@ public class StatisticsController : BaseController
     }
 
     [HttpGet("popular-hall")]
-    public async Task<ActionResult<HallDto>> GetMostPopularHall()
+    public async Task<ActionResult<HallDto>> GetMostPopularHall(DateTime startDate, DateTime endDate)
     {
-        var hall = await _statisticsService.GetMostPopularHallAsync();
+        var hall = await _statisticsService.GetMostPopularHallAsync(startDate, endDate);
         return Ok(hall);
     }
 

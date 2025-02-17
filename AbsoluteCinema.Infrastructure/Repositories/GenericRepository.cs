@@ -3,6 +3,7 @@ using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using AbsoluteCinema.Domain.Exceptions;
+using System.Linq.Expressions;
 
 namespace AbsoluteCinema.Infrastructure.Repositories
 {
@@ -34,15 +35,25 @@ namespace AbsoluteCinema.Infrastructure.Repositories
             _table.Remove(existing);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
+        public async Task<IEnumerable<T>> GetAllAsync(
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            params Expression<Func<T, object>>[] includes)
         {
-            if (orderBy != null)
+            IQueryable<T> query = _table.AsQueryable();
+
+            foreach (var include in includes)
             {
-                return await orderBy(_table.AsQueryable()).ToListAsync();
+                query = query.Include(include);
             }
 
-            return await _table.ToListAsync();
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return await query.ToListAsync();
         }
+
 
         public async Task<T?> GetByIdAsync(int id)
         {
