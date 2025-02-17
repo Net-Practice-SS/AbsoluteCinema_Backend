@@ -27,7 +27,6 @@ public class EntityMappingProfile : Profile
 
         // Ticket
         CreateMap<Ticket, TicketDto>()
-            .ForMember(dest => dest.PlacementId, opt => opt.Ignore())
             .ReverseMap();
 
         // TicketStatus
