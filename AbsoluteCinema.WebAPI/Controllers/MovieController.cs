@@ -1,10 +1,10 @@
 ﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MovieGenreDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieGenreDto;
 
 namespace AbsoluteCinema.WebAPI.Controllers
 {
@@ -63,6 +63,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> AddGenreToMovie([FromQuery] MovieGenreDto movieGenreDto)
         {
             await _movieService.AddGenreToMovieAsync(movieGenreDto);
@@ -70,10 +71,25 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> DeleteGenreFromMovie([FromQuery] MovieGenreDto movieGenreDto)
         {
             await _movieService.DeleteGenreFromMovieAsync(movieGenreDto);
             return Ok($"Genre with id: {movieGenreDto.GenreId} deleted from movie with id {movieGenreDto.MovieId}");
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetAllMoviesForAdmin()
+        {
+            var movies = await _movieService.GetAllMoviesWithIncludeAsync();
+            return Ok(movies);
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetPersonalizedMovieSuggestions(int userId)
+        {
+            var movies = await _movieService.GetPersonalizedMovieSuggestionsAsync(userId);
+            return Ok(movies);
         }
     }
 }

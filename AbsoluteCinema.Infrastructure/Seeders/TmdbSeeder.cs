@@ -7,6 +7,8 @@ using AbsoluteCinema.Application.DTO.MoviesDTO;
 using AbsoluteCinema.Application.DTO.EntityDTO;
 using AbsoluteCinema.Application.DTO.ActorsDTO;
 using AbsoluteCinema.Infrastructure.Converters;
+using MovieActorDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieActorDto;
+using MovieGenreDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieGenreDto;
 
 namespace AbsoluteCinema.Infrastructure.Seeders
 {

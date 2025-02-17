@@ -5,9 +5,11 @@ namespace AbsoluteCinema.Domain.Interfaces
 {
     public interface IRepository<T> where T : IEntity
     {
-        Task<IEnumerable<T>> GetAllAsync(
+        Task<IEnumerable<T>> GetAllAsync( 
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            params Expression<Func<T, object>>[] includes);
+            Func<IQueryable<T>, IQueryable<T>>? include = null, 
+            int page = 1, 
+            int pageSize = 6);
         Task<T?> GetByIdAsync(int id);
         void Add(T entity);
         void Delete(int id);

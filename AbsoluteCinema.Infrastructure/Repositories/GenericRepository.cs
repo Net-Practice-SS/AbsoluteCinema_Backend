@@ -34,24 +34,26 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
             _table.Remove(existing);
         }
-
+        
         public async Task<IEnumerable<T>> GetAllAsync(
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-            params Expression<Func<T, object>>[] includes)
+            Func<IQueryable<T>, IQueryable<T>>? include = null,
+            int page = 1,
+            int pageSize = 6)
         {
             IQueryable<T> query = _table.AsQueryable();
-
-            foreach (var include in includes)
+            
+            if (include != null)
             {
-                query = query.Include(include);
+                query = include(query);
             }
-
+            
             if (orderBy != null)
             {
                 query = orderBy(query);
             }
 
-            return await query.ToListAsync();
+            return await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
 
@@ -59,7 +61,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
         {
            return await _table.FindAsync(id);
         }
-
+        
         public IQueryable<T> GetWithStrategy(IEntityStrategy<T> filterStrategy, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
         {
             var query = _table.AsQueryable();

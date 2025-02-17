@@ -21,7 +21,7 @@ namespace AbsoluteCinema.Application.Services
         public async Task<double> GetRevenueAsync(DateTime? startDate, DateTime? endDate)
         {
             var tickets = await _unitOfWork.Repository<Ticket>()
-                .GetAllAsync(includes: t => t.Session);
+            .GetAllAsync(include: query => query.Include(t => t.Session));
 
             if (startDate.HasValue && endDate.HasValue)
             {
@@ -38,7 +38,7 @@ namespace AbsoluteCinema.Application.Services
         public async Task<IEnumerable<TopMovieDto>> GetTopMoviesByPeriodAsync(DateTime startDate, DateTime endDate, int quantityOfMoviesInTop = 10)
         {
             var tickets = await _unitOfWork.Repository<Ticket>()
-               .GetAllAsync(includes: t => t.Session.Hall);
+               .GetAllAsync(include: query => query.Include(t => t.Session).ThenInclude(g => g.Hall));
 
             var query = tickets
                 .Where(t => t.Session.Date >= startDate && t.Session.Date <= endDate)
@@ -77,7 +77,7 @@ namespace AbsoluteCinema.Application.Services
         public async Task<HallDto> GetMostPopularHallAsync(DateTime startDate, DateTime endDate)
         {
             var tickets = await _unitOfWork.Repository<Ticket>()
-                .GetAllAsync(includes: t => t.Session.Hall);
+               .GetAllAsync(include: query => query.Include(t => t.Session).ThenInclude(g => g.Hall));
 
             var query = tickets
                 .Where(t => t.Session.Date >= startDate && t.Session.Date <= endDate)
@@ -86,7 +86,7 @@ namespace AbsoluteCinema.Application.Services
                 {
                     HallId = g.Key,
                     HallName = g.FirstOrDefault().Session.Hall.Name,
-                    Popularity = (double)g.Count() / (g.FirstOrDefault().Session.Hall.PlaceCount * g.FirstOrDefault().Session.Hall.RowCount)
+                    Popularity = Math.Round((double)g.Count() / (g.FirstOrDefault().Session.Hall.PlaceCount * g.FirstOrDefault().Session.Hall.RowCount), 3)
                 })
                 .OrderByDescending(h => h.Popularity)
                 .FirstOrDefault();
@@ -102,7 +102,7 @@ namespace AbsoluteCinema.Application.Services
         public async Task<IEnumerable<WeekdayDto>> GetBusiestDaysAsync()
         {
             var tickets = await _unitOfWork.Repository<Ticket>()
-                .GetAllAsync(includes: t => t.Session);
+            .GetAllAsync(include: query => query.Include(t => t.Session));
 
             var query = tickets
                 .GroupBy(t => t.Session.Date.DayOfWeek)

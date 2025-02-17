@@ -1,5 +1,8 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
+using AbsoluteCinema.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers;
@@ -30,6 +33,7 @@ public class SessionController : BaseController
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
     public async Task<ActionResult> CreateSession([FromForm] CreateSessionDto createTicketDto)
     {
         var id = await _sessionService.CreateSessionAsync(createTicketDto);
@@ -37,6 +41,7 @@ public class SessionController : BaseController
     }
 
     [HttpDelete]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
     public async Task<ActionResult> DeleteSession(int id)
     {
         await _sessionService.DeleteSessionAsync(id);
@@ -44,6 +49,7 @@ public class SessionController : BaseController
     }
 
     [HttpPut]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
     public async Task<ActionResult> UpdateSession([FromForm] UpdateSessionDto updateTicketDto)
     {
         await _sessionService.UpdateSessionAsync(updateTicketDto);
@@ -51,9 +57,30 @@ public class SessionController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetSessionWithStrategy([FromQuery] GetSessionWithStrategyDto getTicketWithStrategyDto)
+    public async Task<ActionResult> GetSessionWithStrategy([FromQuery] GetSessionWithStrategyDto getSessionWithStrategyDto)
     {
-        var tickets = await _sessionService.GetSessionWithStrategyAsync(getTicketWithStrategyDto);
+        var tickets = await _sessionService.GetSessionWithStrategyAsync(getSessionWithStrategyDto);
+        return Ok(tickets);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetSessionByDate(DateTime date)
+    {
+        var tickets = await _sessionService.GetSessionsByDateAsync(date);
+        return Ok(tickets);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetSessionsForAdmin([FromQuery] GetAllSessionDto getAllSessionDto)
+    {
+        var tickets = await _sessionService.GetAllSessionsWithIncludeAsync(getAllSessionDto);
+        return Ok(tickets);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetUpcomingSessionsByMovie(int movieId)
+    {
+        var tickets = await _sessionService.GetUpcomingSessionsByMovieAsync(movieId);
         return Ok(tickets);
     }
 }

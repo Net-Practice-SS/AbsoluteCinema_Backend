@@ -1,5 +1,8 @@
 ﻿using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.HallsDTO;
+using AbsoluteCinema.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers
@@ -28,6 +31,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> CreateHall([FromForm] CreateHallDto createHallDto)
         {
             var id = await _hallService.CreateHallAsync(createHallDto);
@@ -35,6 +39,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> DeleteHall(int id)
         {
             await _hallService.DeleteHallAsync(id);
@@ -42,6 +47,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> UpdateHall([FromForm] UpdateHallDto updateHallDto)
         {
             await _hallService.UpdateHallAsync(updateHallDto);

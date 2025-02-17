@@ -1,7 +1,4 @@
-﻿using AbsoluteCinema.Application.Contracts;
-using AbsoluteCinema.Application.DTO.Entities;
-using AbsoluteCinema.Domain.Enums;
-using AutoMapper;
+﻿using AbsoluteCinema.Domain.Enums;
 
 namespace AbsoluteCinema.Application.DTO.MoviesDTO
 {

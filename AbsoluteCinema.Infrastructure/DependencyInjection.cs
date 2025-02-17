@@ -31,6 +31,8 @@ namespace AbsoluteCinema.Infrastructure
             services.AddScoped<IJwtService, JWTService>();
             services.AddScoped<ITmdbService, TmdbService>();
             services.AddScoped<IStatisticsService, StatisticsService>();
+            services.AddScoped<IUserService, UserService>();
+
 
             // Подключаем мапперы
             services.AddAutoMapper(typeof(LoginMappingProfile).Assembly);
