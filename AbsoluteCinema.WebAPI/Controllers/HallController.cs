@@ -55,7 +55,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetHallWithStrategy([FromBody] GetHallWithStrategyDto getHallWithStrategyDto)
+        public async Task<ActionResult> GetHallWithStrategy([FromQuery] GetHallWithStrategyDto getHallWithStrategyDto)
         {
             var halls = await _hallService.GetHallWithStrategyAsync(getHallWithStrategyDto);
             return Ok(halls);

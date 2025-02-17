@@ -57,7 +57,7 @@ public class SessionController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetSessionWithStrategy([FromBody] GetSessionWithStrategyDto getSessionWithStrategyDto)
+    public async Task<ActionResult> GetSessionWithStrategy([FromQuery] GetSessionWithStrategyDto getSessionWithStrategyDto)
     {
         var tickets = await _sessionService.GetSessionWithStrategyAsync(getSessionWithStrategyDto);
         return Ok(tickets);
