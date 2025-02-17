@@ -57,7 +57,7 @@ public class TicketController : BaseController
     }
     
     [HttpGet]
-    public async Task<ActionResult> GetTicketWithStrategy([FromBody] GetTicketWithStrategyDto getTicketWithStrategyDto)
+    public async Task<ActionResult> GetTicketWithStrategy([FromQuery] GetTicketWithStrategyDto getTicketWithStrategyDto)
     {
         var tickets = await _ticketService.GetTicketWithStrategyAsync(getTicketWithStrategyDto);
         return Ok(tickets);

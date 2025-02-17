@@ -56,7 +56,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult> GetActorWithStrategy(
-            [FromBody] GetActorWithStrategyDto getActorWithStrategyDto)
+            [FromQuery] GetActorWithStrategyDto getActorWithStrategyDto)
         {
             var actors = await _actorService.GetActorWithStrategyAsync(getActorWithStrategyDto);
             return Ok(actors);

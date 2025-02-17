@@ -72,7 +72,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetGenreWithStrategy([FromBody] GetGenreWithStrategyDto getGenreWithStrategyDto)
+        public async Task<ActionResult> GetGenreWithStrategy([FromQuery] GetGenreWithStrategyDto getGenreWithStrategyDto)
         {
             var genres = await _genreService.GetGenreWithStrategyAsync(getGenreWithStrategyDto);
             return Ok(genres);
