@@ -1,4 +1,5 @@
 ﻿using AbsoluteCinema.Domain.Entities.Interfaces;
+using System.Linq.Expressions;
 
 namespace AbsoluteCinema.Domain.Interfaces
 {

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AbsoluteCinema.Infrastructure.UnitOfWorks;
 using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Infrastructure.Services;
+using AbsoluteCinema.Application.Services;
 
 
 namespace AbsoluteCinema.Infrastructure
@@ -29,7 +30,9 @@ namespace AbsoluteCinema.Infrastructure
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtService, JWTService>();
             services.AddScoped<ITmdbService, TmdbService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IUserService, UserService>();
+
 
             // Подключаем мапперы
             services.AddAutoMapper(typeof(LoginMappingProfile).Assembly);

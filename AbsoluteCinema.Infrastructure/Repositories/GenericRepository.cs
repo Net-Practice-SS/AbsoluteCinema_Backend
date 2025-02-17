@@ -3,6 +3,7 @@ using AbsoluteCinema.Domain.Interfaces;
 using AbsoluteCinema.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using AbsoluteCinema.Domain.Exceptions;
+using System.Linq.Expressions;
 
 namespace AbsoluteCinema.Infrastructure.Repositories
 {
@@ -54,6 +55,7 @@ namespace AbsoluteCinema.Infrastructure.Repositories
 
             return await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
         }
+
 
         public async Task<T?> GetByIdAsync(int id)
         {
