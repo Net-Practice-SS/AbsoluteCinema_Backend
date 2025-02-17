@@ -74,7 +74,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
                 query => query.OrderBy($"{getSessionWithStrategyDto.OrderByProperty} {getSessionWithStrategyDto.OrderDirection}");
 
-            var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy);
+            var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy, page: getSessionWithStrategyDto.Page, getSessionWithStrategyDto.PageSize);
 
             var sessions = await query.ToListAsync();
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);

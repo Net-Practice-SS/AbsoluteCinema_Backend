@@ -83,7 +83,7 @@ namespace AbsoluteCinema.Application.Services
                 query => query.OrderBy(
                     $"{getActorWithStrategyDto.OrderByProperty} {getActorWithStrategyDto.OrderDirection}");
 
-            var query = _unitOfWork.ActorRepository.GetWithStrategy(strategy, orderBy);
+            var query = _unitOfWork.ActorRepository.GetWithStrategy(strategy, orderBy, page: getActorWithStrategyDto.Page, getActorWithStrategyDto.PageSize);
             var actors = await query.ToListAsync();
             return _mapper.Map<IEnumerable<ActorDto>>(actors);
         }
