@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
 
 
+
 namespace AbsoluteCinema.Application.Services
 {
     public class SessionService : ISessionService
@@ -41,11 +42,10 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
                 query => query.OrderBy($"{getDto.OrderByProperty} {getDto.OrderDirection}");
 
-            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy);
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy, include: null, page: getDto.Page, getDto.PageSize);
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
-
-
+        
         public async Task<SessionDto?> GetSessionByIdAsync(int id)
         {
             var session = await _unitOfWork.Repository<Session>().GetByIdAsync(id);
@@ -77,6 +77,51 @@ namespace AbsoluteCinema.Application.Services
             var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy);
 
             var sessions = await query.ToListAsync();
+            return _mapper.Map<IEnumerable<SessionDto>>(sessions);
+        }
+        
+        public async Task<IEnumerable<SessionDto>> GetSessionsByDateAsync(DateTime date)
+        {
+            var strategy = new SessionStrategy(date: date);
+            
+            Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
+                query => query.OrderBy("Date asc");
+            
+            var query = _unitOfWork.Repository<Session>().GetWithStrategy(strategy, orderBy);
+            
+            var sessions = await query.ToListAsync();
+            
+            return _mapper.Map<IEnumerable<SessionDto>>(sessions);
+        }
+
+        public async Task<IEnumerable<SessionDto>> GetAllSessionsWithIncludeAsync(GetAllSessionDto getSessionDto)
+        {
+            Func<IQueryable<Session>, IOrderedQueryable<Session>> orderBy =
+                query => query.OrderBy($"{getSessionDto.OrderByProperty} {getSessionDto.OrderDirection}");
+            
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(orderBy,
+                include: query => query
+                    .Include(s => s.Movie)
+                    .Include(s => s.Hall), 
+                page: getSessionDto.Page, getSessionDto.PageSize
+            );
+            
+            var sessionFrontDtos = _mapper.Map<IEnumerable<SessionDto>>(sessions);
+            return sessionFrontDtos;
+        }
+        
+        public async Task<IEnumerable<SessionDto>> GetUpcomingSessionsByMovieAsync(int movieId)
+        {
+            var now = DateTime.UtcNow;
+            now = DateTime.SpecifyKind(now, DateTimeKind.Unspecified);
+
+            var sessions = await _unitOfWork.Repository<Session>().GetAllAsync(
+                orderBy: query => query.OrderBy(s => s.Date),
+                include: query => query
+                    .Include(s => s.Hall)
+                    .Where(s => s.Date >= now && s.MovieId == movieId)
+            );
+
             return _mapper.Map<IEnumerable<SessionDto>>(sessions);
         }
     }

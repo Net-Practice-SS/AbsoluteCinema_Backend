@@ -1,4 +1,7 @@
-﻿using AbsoluteCinema.Domain.Enums;
+﻿using AbsoluteCinema.Application.DTO.EntityDTO;
+using AbsoluteCinema.Domain.Entities;
+using AbsoluteCinema.Domain.Entities.Interfaces;
+using AbsoluteCinema.Domain.Enums;
 
 namespace AbsoluteCinema.Application.DTO.Entities;
 
@@ -13,4 +16,9 @@ public class MovieDto
     public MovieLanguageEnum Language { get; set; }
     public DateTime? ReleaseDate { get; set; }
     public string? TrailerPath { get; set; }
+    
+    public IEnumerable<MovieActorDto> MovieActors { get; set; } = new List<MovieActorDto>();
+    public IEnumerable<MovieGenreDto> MovieGenres { get; set; } = new List<MovieGenreDto>();
+    
+    
 }

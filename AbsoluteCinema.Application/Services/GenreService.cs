@@ -57,7 +57,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Genre>, IOrderedQueryable<Genre>> orderBy =
                 query => query.OrderBy($"{getAllGenreDto.OrderByProperty} {getAllGenreDto.OrderDirection}");
 
-            var genres = await _unitOfWork.GenreRepository.GetAllAsync(orderBy);
+            var genres = await _unitOfWork.GenreRepository.GetAllAsync(orderBy, include: null, page: getAllGenreDto.Page, getAllGenreDto.PageSize);
             return _mapper.Map<IEnumerable<GenreDto>>(genres);
         }
 

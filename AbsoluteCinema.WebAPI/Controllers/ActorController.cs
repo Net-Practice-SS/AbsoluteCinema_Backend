@@ -1,5 +1,8 @@
 using AbsoluteCinema.Application.Contracts;
 using AbsoluteCinema.Application.DTO.ActorsDTO;
+using AbsoluteCinema.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsoluteCinema.WebAPI.Controllers
@@ -28,6 +31,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> CreateActor([FromForm] CreateActorDto actorDto)
         {
             var id = await _actorService.CreateActorAsync(actorDto);
@@ -35,6 +39,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> DeleteActor(int id)
         {
             await _actorService.DeleteActorAsync(id);
@@ -42,6 +47,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
         public async Task<ActionResult> UpdateActor([FromForm] UpdateActorDto updateActorDto)
         {
             await _actorService.UpdateActorAsync(updateActorDto);
