@@ -137,5 +137,49 @@ namespace AbsoluteCinema.Application.Services
             var movies = _mapper.Map<IEnumerable<MovieDto>>(movieDto);
             return movies;
         }
+        
+        // Этот метод был сделан за 1 запрос в chatGpt, я задумываюсь стоит ли мне дальше быть программистом.
+        public async Task<IEnumerable<MovieDto>> GetPersonalizedMovieSuggestionsAsync(int userId)
+        {
+            var userTickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(
+                include: query => query
+                    .Where(t => t.UserId == userId)
+                    .Include(t => t.Session)
+                        .ThenInclude(s => s.Movie)
+                        .ThenInclude(m => m.MovieGenre)
+            );
+            
+            var watchedMovies = userTickets
+                .Select(t => t.Session.Movie)
+                .Distinct()
+                .ToList();
+            
+            var genreIds = watchedMovies
+                .SelectMany(m => m.MovieGenre.Select(mg => mg.GenreId))
+                .Distinct()
+                .ToList();
+            
+            if (!genreIds.Any())
+            {
+                return new List<MovieDto>();
+            }
+            
+            var suggestedMovies = await _unitOfWork.Repository<Movie>().GetAllAsync(
+                include: query => query
+                    .Include(m => m.MovieGenre),
+                orderBy: query => query.OrderBy(m => m.Score)
+            );
+            
+            suggestedMovies = suggestedMovies
+                .Where(m => m.MovieGenre.Any(mg => genreIds.Contains(mg.GenreId)));
+            
+            suggestedMovies = suggestedMovies
+                .Where(m => !watchedMovies.Any(w => w.Id == m.Id));
+            
+            var result = suggestedMovies.Take(5);
+            
+            return _mapper.Map<IEnumerable<MovieDto>>(result);
+        }
+
     }
 }
