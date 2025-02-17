@@ -104,7 +104,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Movie>, IOrderedQueryable<Movie>> orderBy = 
                 query => query.OrderBy($"{getMovieWithStrategyDto.OrderByProperty} {getMovieWithStrategyDto.OrderDirection}");
 
-            var query = _unitOfWork.MovieRepository.GetWithStrategy(strategy, orderBy);
+            var query = _unitOfWork.MovieRepository.GetWithStrategy(strategy, orderBy, page: getMovieWithStrategyDto.Page, getMovieWithStrategyDto.PageSize);
             var movies = await query.ToListAsync();
             return _mapper.Map<IEnumerable<MovieDto>>(movies);
         }
