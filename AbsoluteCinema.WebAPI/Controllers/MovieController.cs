@@ -33,7 +33,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> CreateMovie([FromForm] CreateMovieDto movieDto)
+        public async Task<ActionResult> CreateMovie([FromBody] CreateMovieDto movieDto)
         {
             var id = await _movieService.CreateMovieAsync(movieDto);
             return Ok(id);
@@ -49,14 +49,14 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> UpdateMovie([FromForm] UpdateMovieDto updateMovieDto)
+        public async Task<ActionResult> UpdateMovie([FromBody] UpdateMovieDto updateMovieDto)
         {
             await _movieService.UpdateMovieAsync(updateMovieDto);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetMovieWithStrategy([FromQuery] GetMovieWithStrategyDto getMovieWithStrategyDto)
+        public async Task<ActionResult> GetMovieWithStrategy([FromBody] GetMovieWithStrategyDto getMovieWithStrategyDto)
         {
             var movies = await _movieService.GetMovieWithStrategyAsync(getMovieWithStrategyDto);
             return Ok(movies);
@@ -64,7 +64,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> AddGenreToMovie([FromQuery] MovieGenreDto movieGenreDto)
+        public async Task<ActionResult> AddGenreToMovie([FromBody] MovieGenreDto movieGenreDto)
         {
             await _movieService.AddGenreToMovieAsync(movieGenreDto);
             return Ok($"Genre with id: {movieGenreDto.GenreId} added to movie with id: {movieGenreDto.MovieId}");
@@ -72,7 +72,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpDelete]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> DeleteGenreFromMovie([FromQuery] MovieGenreDto movieGenreDto)
+        public async Task<ActionResult> DeleteGenreFromMovie([FromBody] MovieGenreDto movieGenreDto)
         {
             await _movieService.DeleteGenreFromMovieAsync(movieGenreDto);
             return Ok($"Genre with id: {movieGenreDto.GenreId} deleted from movie with id {movieGenreDto.MovieId}");

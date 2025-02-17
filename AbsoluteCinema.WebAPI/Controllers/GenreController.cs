@@ -33,7 +33,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> CreateGenre([FromForm] CreateGenreDto createGenreDto)
+        public async Task<ActionResult> CreateGenre([FromBody] CreateGenreDto createGenreDto)
         {
             var id = await _genreService.CreateGenreAsync(createGenreDto);
             return Ok(id);
@@ -65,14 +65,14 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> UpdateGenre([FromForm] UpdateGenreDto updateGenreDto)
+        public async Task<ActionResult> UpdateGenre([FromBody] UpdateGenreDto updateGenreDto)
         {
             await _genreService.UpdateGenreAsync(updateGenreDto);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetGenreWithStrategy([FromQuery] GetGenreWithStrategyDto getGenreWithStrategyDto)
+        public async Task<ActionResult> GetGenreWithStrategy([FromBody] GetGenreWithStrategyDto getGenreWithStrategyDto)
         {
             var genres = await _genreService.GetGenreWithStrategyAsync(getGenreWithStrategyDto);
             return Ok(genres);

@@ -32,7 +32,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> CreateHall([FromForm] CreateHallDto createHallDto)
+        public async Task<ActionResult> CreateHall([FromBody] CreateHallDto createHallDto)
         {
             var id = await _hallService.CreateHallAsync(createHallDto);
             return Ok(id);
@@ -48,14 +48,14 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> UpdateHall([FromForm] UpdateHallDto updateHallDto)
+        public async Task<ActionResult> UpdateHall([FromBody] UpdateHallDto updateHallDto)
         {
             await _hallService.UpdateHallAsync(updateHallDto);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetHallWithStrategy([FromQuery] GetHallWithStrategyDto getHallWithStrategyDto)
+        public async Task<ActionResult> GetHallWithStrategy([FromBody] GetHallWithStrategyDto getHallWithStrategyDto)
         {
             var halls = await _hallService.GetHallWithStrategyAsync(getHallWithStrategyDto);
             return Ok(halls);

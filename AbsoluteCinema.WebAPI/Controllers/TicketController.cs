@@ -34,7 +34,7 @@ public class TicketController : BaseController
         
     [HttpPost]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.UserPolicy)]
-    public async Task<ActionResult> CreateTicket([FromForm] CreateTicketDto createTicketDto)
+    public async Task<ActionResult> CreateTicket([FromBody] CreateTicketDto createTicketDto)
     {
         var id = await _ticketService.CreateTicketAsync(createTicketDto);
         return Ok(id);
@@ -50,28 +50,28 @@ public class TicketController : BaseController
         
     [HttpPut]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-    public async Task<ActionResult> UpdateTicket([FromForm] UpdateTicketDto updateTicketDto)
+    public async Task<ActionResult> UpdateTicket([FromBody] UpdateTicketDto updateTicketDto)
     {
         await _ticketService.UpdateTicketAsync(updateTicketDto);
         return Ok();
     }
     
     [HttpGet]
-    public async Task<ActionResult> GetTicketWithStrategy([FromQuery] GetTicketWithStrategyDto getTicketWithStrategyDto)
+    public async Task<ActionResult> GetTicketWithStrategy([FromBody] GetTicketWithStrategyDto getTicketWithStrategyDto)
     {
         var tickets = await _ticketService.GetTicketWithStrategyAsync(getTicketWithStrategyDto);
         return Ok(tickets);
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateTicketStatus([FromQuery] int ticketId, [FromQuery] TicketStatusIdDto ticketStatusIdDto)
+    public async Task<ActionResult> UpdateTicketStatus([FromQuery] int ticketId, [FromBody] TicketStatusIdDto ticketStatusIdDto)
     {
         await _ticketService.UpdateTicketStatusAsync(ticketId, ticketStatusIdDto);
         return Ok();
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllTicketsForAdmin([FromQuery]GetAllTicketsDto getAllTicketsDto)
+    public async Task<ActionResult> GetAllTicketsForAdmin([FromBody] GetAllTicketsDto getAllTicketsDto)
     {
         var tickets = await _ticketService.GetAllTicketsWithIncludeAsync(getAllTicketsDto);
         return Ok(tickets);

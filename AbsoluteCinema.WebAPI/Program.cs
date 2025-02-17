@@ -32,6 +32,9 @@ builder.Services.AddControllers(options =>
 {
     // Додаємо конвертер для серіалізації enum як рядків
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+    // Знімаємо правило на точні назви при запитах
+    //options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
 
 //Swagger

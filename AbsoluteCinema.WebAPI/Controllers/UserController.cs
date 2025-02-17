@@ -30,7 +30,7 @@ public class UserController : BaseController
     }
     
     [HttpPut]
-    public async Task<ActionResult> UpdateUser([FromForm] UpdateUserDto updateUserDto)
+    public async Task<ActionResult> UpdateUser([FromBody] UpdateUserDto updateUserDto)
     {
         var result = await _userService.UpdateUserAsync(updateUserDto);
         if (result.Succeeded)

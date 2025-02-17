@@ -32,7 +32,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> CreateActor([FromForm] CreateActorDto actorDto)
+        public async Task<ActionResult> CreateActor([FromBody] CreateActorDto actorDto)
         {
             var id = await _actorService.CreateActorAsync(actorDto);
             return Ok(id);
@@ -48,7 +48,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = Policy.AdminPolicy)]
-        public async Task<ActionResult> UpdateActor([FromForm] UpdateActorDto updateActorDto)
+        public async Task<ActionResult> UpdateActor([FromBody] UpdateActorDto updateActorDto)
         {
             await _actorService.UpdateActorAsync(updateActorDto);
             return Ok();
@@ -56,7 +56,7 @@ namespace AbsoluteCinema.WebAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult> GetActorWithStrategy(
-            [FromQuery] GetActorWithStrategyDto getActorWithStrategyDto)
+            [FromBody] GetActorWithStrategyDto getActorWithStrategyDto)
         {
             var actors = await _actorService.GetActorWithStrategyAsync(getActorWithStrategyDto);
             return Ok(actors);
