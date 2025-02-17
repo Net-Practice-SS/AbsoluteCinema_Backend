@@ -60,7 +60,9 @@ namespace AbsoluteCinema.Infrastructure.Repositories
            return await _table.FindAsync(id);
         }
         
-        public IQueryable<T> GetWithStrategy(IEntityStrategy<T> filterStrategy, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!)
+        public IQueryable<T> GetWithStrategy(IEntityStrategy<T> filterStrategy, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!,
+            int page = 1,
+            int pageSize = 6)
         {
             var query = _table.AsQueryable();
             query = filterStrategy.ApplyFilter(query);
@@ -69,8 +71,8 @@ namespace AbsoluteCinema.Infrastructure.Repositories
             {
                 orderBy(query);
             }
-
-            return query;
+            
+            return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public void Update(T entity)
