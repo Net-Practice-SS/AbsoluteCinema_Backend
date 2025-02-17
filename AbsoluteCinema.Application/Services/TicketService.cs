@@ -76,7 +76,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Ticket>, IOrderedQueryable<Ticket>> orderBy =
                 query => query.OrderBy($"{getTicketWithStrategyDto.OrderByProperty} {getTicketWithStrategyDto.OrderDirection}");
             
-            var query = _unitOfWork.Repository<Ticket>().GetWithStrategy(strategy, orderBy);
+            var query = _unitOfWork.Repository<Ticket>().GetWithStrategy(strategy, orderBy, page: getTicketWithStrategyDto.Page, getTicketWithStrategyDto.PageSize);
             var tickets = await query.ToListAsync();
             return _mapper.Map<IEnumerable<TicketDto>>(tickets);
         }

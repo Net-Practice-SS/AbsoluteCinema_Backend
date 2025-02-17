@@ -15,6 +15,8 @@ namespace AbsoluteCinema.Domain.Interfaces
         void Update(T entity);
         IQueryable<T> GetWithStrategy(
             IEntityStrategy<T> filterStrategy,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!);
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!,
+            int page = 1,
+            int pageSize = 6);
     }
 }

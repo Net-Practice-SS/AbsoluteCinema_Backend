@@ -66,7 +66,7 @@ namespace AbsoluteCinema.Application.Services
             Func<IQueryable<Hall>, IOrderedQueryable<Hall>> orderBy =
                 query => query.OrderBy($"{getHallWithStrategyDto.OrderByProperty} {getHallWithStrategyDto.OrderDirection}");
 
-            var query = _unitOfWork.Repository<Hall>().GetWithStrategy(strategy, orderBy);
+            var query = _unitOfWork.Repository<Hall>().GetWithStrategy(strategy, orderBy, page: getHallWithStrategyDto.Page, getHallWithStrategyDto.PageSize);
             var halls = await query.ToListAsync();
             return _mapper.Map<IEnumerable<HallDto>>(halls);
         }
