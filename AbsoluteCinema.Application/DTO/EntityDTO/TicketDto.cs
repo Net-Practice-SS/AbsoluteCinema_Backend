@@ -1,7 +1,5 @@
 ﻿using AbsoluteCinema.Application.DTO.AuthDTO.SessionsDTO;
 using AbsoluteCinema.Application.DTO.UsersDTO;
-using AbsoluteCinema.Domain.Entities;
-using AbsoluteCinema.Domain.Entities.Interfaces;
 
 namespace AbsoluteCinema.Application.DTO.Entities;
 
@@ -12,7 +10,7 @@ public class TicketDto
     public int UserId { get; set; }
     public int Row { get; set; }
     public int Place { get; set; }
-    public int PlacementId { get; set; }
+    public double Price  { get; set; }
     public int StatusId { get; set; }
     
     public SessionDto Session { get; set; } = null!;
