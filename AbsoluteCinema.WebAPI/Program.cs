@@ -83,6 +83,9 @@ using (var scope = app.Services.CreateScope())
 
     // Запускаем сидер для Session
     await SessionSeeder.SeedSessionsAsync(context);
+
+    // Запускаем сидер для Ticket
+    await TicketSeeder.SeedTicketsAsync(context);  
 }
 
 // Запускаем сидер для заповнення даних Movie, Genres, Actors, MovieGenres, MovieActors

@@ -23,12 +23,13 @@ namespace AbsoluteCinema.Infrastructure.Seeders
                 {
                     var hall = halls[random.Next(halls.Count)];
                     var date = DateTime.Now.AddDays(random.Next(1, 7))
-                                            .AddHours(random.Next(10, 22)); 
+                                            .AddHours(random.Next(10, 22));
 
                     bool exists = await context.Sessions.AnyAsync(s =>
-                        s.MovieId == movie.Id &&
-                        s.HallId == hall.Id &&
-                        s.Date.Date == date.Date);
+                    s.MovieId == movie.Id &&
+                    s.HallId == hall.Id &&
+                    s.Date == date);
+    
 
                     if (!exists)
                     {
