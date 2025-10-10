@@ -63,9 +63,20 @@ namespace AbsoluteCinema.Domain.Strategies
             if (_releaseYearFrom.HasValue && _releaseYearTo.HasValue)
             {
                 query = query.Where(m => m.ReleaseDate.HasValue &&
-                             m.ReleaseDate.Value.Year >= _releaseYearFrom.Value.Year &&
-                             m.ReleaseDate.Value.Year <= _releaseYearTo.Value.Year);
+                             m.ReleaseDate.Value.Date >= _releaseYearFrom.Value.Date &&
+                             m.ReleaseDate.Value.Date <= _releaseYearTo.Value.Date);
             }
+            else if (_releaseYearFrom.HasValue)
+            {
+                query = query.Where(m => m.ReleaseDate.HasValue &&
+                             m.ReleaseDate.Value.Date >= _releaseYearFrom.Value.Date);
+            }
+            else if (_releaseYearTo.HasValue)
+            {
+                query = query.Where(m => m.ReleaseDate.HasValue &&
+                             m.ReleaseDate.Value.Date <= _releaseYearTo.Value.Date);
+            }
+
             if (_actorsIds != null && _actorsIds.Count > 0)
             {
                 query = query.Where(
