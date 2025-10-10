@@ -139,6 +139,7 @@ namespace AbsoluteCinema.Application.Services
         }
         
         // Этот метод был сделан за 1 запрос в chatGpt, я задумываюсь стоит ли мне дальше быть программистом.
+        // Ето круто конечно
         public async Task<IEnumerable<MovieDto>> GetPersonalizedMovieSuggestionsAsync(int userId)
         {
             var userTickets = await _unitOfWork.Repository<Ticket>().GetAllAsync(

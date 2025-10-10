@@ -9,6 +9,7 @@ using AbsoluteCinema.Application.DTO.ActorsDTO;
 using AbsoluteCinema.Infrastructure.Converters;
 using MovieActorDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieActorDto;
 using MovieGenreDto = AbsoluteCinema.Application.DTO.EntityDTO.MovieGenreDto;
+using AbsoluteCinema.Domain.Exceptions;
 
 namespace AbsoluteCinema.Infrastructure.Seeders
 {
@@ -28,12 +29,21 @@ namespace AbsoluteCinema.Infrastructure.Seeders
             if (!context.Movies.Any())
             {
                 var tmdbGenres = await tmdbService.GetGenresAsync();
-                var tmdbMovies = (await tmdbService.GetMoviesAsync()).Take(10);
+                var tmdbMovies = (await tmdbService.GetMoviesAsync());
 
                 foreach (var tmdbMovie in tmdbMovies)
                 {
                     var createMovieDto = mapper.Map<CreateMovieDto>(tmdbMovie);
-                    createMovieDto.TrailerPath = await tmdbService.GetMovieTrailerAsync(tmdbMovie.Id);
+                    try
+                    {
+                        createMovieDto.TrailerPath = await tmdbService.GetMovieTrailerAsync(tmdbMovie.Id);
+                    }
+                    catch (EntityNotFoundException ex)
+                    {
+                        Console.WriteLine($"[WARN] {ex.Message}. MovieId = {tmdbMovie.Id}");
+                        createMovieDto.TrailerPath = "Not have trailer";
+                    }
+
                     var movieId = await movieService.CreateMovieAsync(createMovieDto);
 
                     foreach (var tmdbGenreId in tmdbMovie.GenreIds)
